@@ -77,8 +77,8 @@ const TreeRenderer = {
             side: 'center'
         };
 
-        // Parents
-        const parentSpread = usableWidth * 0.25;
+        // Parents - spread wider to prevent great-grandparent overlap
+        const parentSpread = usableWidth * 0.30;
         positions.mother = {
             x: centerX - parentSpread,
             y: genHeights[1],
@@ -92,8 +92,8 @@ const TreeRenderer = {
             side: 'paternal'
         };
 
-        // Grandparents
-        const gpSpread = usableWidth * 0.18;
+        // Grandparents - reduced spread to keep tree balanced
+        const gpSpread = usableWidth * 0.14;
         positions.mothersMother = {
             x: centerX - parentSpread - gpSpread,
             y: genHeights[2],
@@ -119,8 +119,8 @@ const TreeRenderer = {
             side: 'paternal'
         };
 
-        // Great-grandparents
-        const ggpSpread = usableWidth * 0.08;
+        // Great-grandparents - tighter spread to prevent center overlap
+        const ggpSpread = usableWidth * 0.06;
 
         // Maternal side (left half)
         positions.mothersMothersMother = {
