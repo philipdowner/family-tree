@@ -10,14 +10,14 @@ const TreeRenderer = {
     // Tree layout configuration
     config: {
         viewBox: { width: 1920, height: 1080 },
-        padding: { top: 60, bottom: 120, left: 100, right: 100 },
+        padding: { top: 40, bottom: 100, left: 60, right: 60 },
 
-        // Card sizes per generation
+        // Card sizes per generation (larger for better readability)
         cardSizes: {
-            0: { width: 160, height: 180, photoSize: 80 },  // Child
-            1: { width: 140, height: 160, photoSize: 60 },  // Parents
-            2: { width: 120, height: 140, photoSize: 50 },  // Grandparents
-            3: { width: 100, height: 110, photoSize: 40 }   // Great-grandparents
+            0: { width: 200, height: 220, photoSize: 100 },  // Child
+            1: { width: 180, height: 200, photoSize: 90 },   // Parents
+            2: { width: 160, height: 180, photoSize: 75 },   // Grandparents
+            3: { width: 140, height: 155, photoSize: 60 }    // Great-grandparents
         },
 
         // Vertical spacing between generations
@@ -59,11 +59,12 @@ const TreeRenderer = {
         const usableHeight = vb.height - pad.top - pad.bottom;
 
         // Calculate Y positions for each generation (from bottom to top)
+        // Spread out more to accommodate larger cards
         const genHeights = [
-            pad.top + usableHeight * 0.85,  // Gen 0: Child (bottom)
-            pad.top + usableHeight * 0.62,  // Gen 1: Parents
+            pad.top + usableHeight * 0.88,  // Gen 0: Child (bottom)
+            pad.top + usableHeight * 0.64,  // Gen 1: Parents
             pad.top + usableHeight * 0.38,  // Gen 2: Grandparents
-            pad.top + usableHeight * 0.12   // Gen 3: Great-grandparents (top)
+            pad.top + usableHeight * 0.14   // Gen 3: Great-grandparents (top)
         ];
 
         const centerX = vb.width / 2;
@@ -78,7 +79,7 @@ const TreeRenderer = {
         };
 
         // Parents - spread wider to prevent great-grandparent overlap
-        const parentSpread = usableWidth * 0.30;
+        const parentSpread = usableWidth * 0.32;
         positions.mother = {
             x: centerX - parentSpread,
             y: genHeights[1],
@@ -324,6 +325,8 @@ const TreeRenderer = {
         // Background rectangle
         const bg = this.createSVGElement('rect', {
             class: 'tree-card-bg',
+            x: 0,
+            y: 0,
             width: size.width,
             height: size.height,
             rx: 12,

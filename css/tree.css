@@ -104,25 +104,25 @@
 /* Text in cards */
 .tree-card-name {
     font-family: var(--font-family);
-    font-size: 14px;
+    font-size: 18px;
     font-weight: 600;
     fill: var(--color-text);
     text-anchor: middle;
 }
 
 .tree-card-name.small {
-    font-size: 11px;
+    font-size: 14px;
 }
 
 .tree-card-dates {
     font-family: var(--font-family);
-    font-size: 10px;
+    font-size: 13px;
     fill: var(--color-text-light);
     text-anchor: middle;
 }
 
 .tree-card-dates.small {
-    font-size: 8px;
+    font-size: 11px;
 }
 
 /* Generation labels */
@@ -136,31 +136,8 @@
 
 /* --------------------------------------------------------------------------
    Card Sizes by Generation
+   Note: Actual sizes are set via SVG attributes in tree-renderer.js
    -------------------------------------------------------------------------- */
-
-/* Child (largest) */
-.tree-card.gen-0 .tree-card-bg {
-    width: 160px;
-    height: 180px;
-}
-
-/* Parents */
-.tree-card.gen-1 .tree-card-bg {
-    width: 140px;
-    height: 160px;
-}
-
-/* Grandparents */
-.tree-card.gen-2 .tree-card-bg {
-    width: 120px;
-    height: 140px;
-}
-
-/* Great-grandparents (smallest) */
-.tree-card.gen-3 .tree-card-bg {
-    width: 100px;
-    height: 110px;
-}
 
 /* --------------------------------------------------------------------------
    Card Entry Animation
