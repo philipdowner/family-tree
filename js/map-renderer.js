@@ -7,15 +7,15 @@ const MapRenderer = {
     // SVG namespace
     SVG_NS: 'http://www.w3.org/2000/svg',
 
-    // Map dimensions (matches viewBox)
-    mapWidth: 1000,
-    mapHeight: 500,
+    // Map dimensions (matches viewBox of world-map.svg)
+    mapWidth: 4378.13,
+    mapHeight: 2434.94,
 
-    // Pin configuration
+    // Pin configuration (larger for the bigger map)
     pinConfig: {
-        radius: 8,
-        pulseRadius: 15,
-        labelOffset: 20
+        radius: 35,
+        pulseRadius: 60,
+        labelOffset: 55
     },
 
     // Store references
@@ -196,14 +196,14 @@ const MapRenderer = {
         pin.setAttribute('r', this.pinConfig.radius);
         pin.setAttribute('fill', '#0D7377');
         pin.setAttribute('stroke', '#FFFFFF');
-        pin.setAttribute('stroke-width', '2');
+        pin.setAttribute('stroke-width', '8');
         group.appendChild(pin);
 
         // Inner dot
         const dot = document.createElementNS(this.SVG_NS, 'circle');
         dot.setAttribute('cx', 0);
         dot.setAttribute('cy', 0);
-        dot.setAttribute('r', 3);
+        dot.setAttribute('r', 12);
         dot.setAttribute('fill', '#FFFFFF');
         group.appendChild(dot);
 
@@ -213,8 +213,8 @@ const MapRenderer = {
         label.setAttribute('y', this.pinConfig.labelOffset);
         label.setAttribute('text-anchor', 'middle');
         label.setAttribute('fill', '#2D3436');
-        label.setAttribute('font-size', '12');
-        label.setAttribute('font-weight', '500');
+        label.setAttribute('font-size', '48');
+        label.setAttribute('font-weight', '600');
         label.setAttribute('font-family', 'Segoe UI, sans-serif');
         label.textContent = data.country;
         group.appendChild(label);
@@ -222,20 +222,20 @@ const MapRenderer = {
         // Member count badge (if more than 1)
         if (data.members.length > 1) {
             const badge = document.createElementNS(this.SVG_NS, 'g');
-            badge.setAttribute('transform', `translate(${this.pinConfig.radius}, -${this.pinConfig.radius})`);
+            badge.setAttribute('transform', `translate(${this.pinConfig.radius * 0.8}, -${this.pinConfig.radius * 0.8})`);
 
             const badgeCircle = document.createElementNS(this.SVG_NS, 'circle');
-            badgeCircle.setAttribute('r', 8);
+            badgeCircle.setAttribute('r', 28);
             badgeCircle.setAttribute('fill', '#FF6B6B');
             badgeCircle.setAttribute('stroke', '#FFFFFF');
-            badgeCircle.setAttribute('stroke-width', '1');
+            badgeCircle.setAttribute('stroke-width', '4');
             badge.appendChild(badgeCircle);
 
             const badgeText = document.createElementNS(this.SVG_NS, 'text');
             badgeText.setAttribute('text-anchor', 'middle');
             badgeText.setAttribute('dominant-baseline', 'central');
             badgeText.setAttribute('fill', '#FFFFFF');
-            badgeText.setAttribute('font-size', '10');
+            badgeText.setAttribute('font-size', '36');
             badgeText.setAttribute('font-weight', '600');
             badgeText.textContent = data.members.length;
             badge.appendChild(badgeText);
