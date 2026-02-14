@@ -9,8 +9,8 @@
     "_comment": "This is YOU! Fill in your information below.",
     "firstName": "Mason",
     "lastName": "Downer",
-    "photo": "images/people/mason.jpg",
-    "birthDate": "2014-05-15",
+    "photo": "images/people/me.jpg",
+    "birthDate": "2015-04-29",
     "deathDate": null,
     "countryOfOrigin": "United States",
     "countryFlag": "us"
@@ -21,10 +21,10 @@
 
     "mother": {
       "_comment": "Your mother's information",
-      "firstName": "Sarah",
-      "lastName": "Downer",
+      "firstName": "Kelli",
+      "lastName": "Murray",
       "photo": "images/people/mother.jpg",
-      "birthDate": "1985-03-20",
+      "birthDate": "1984-10-05",
       "deathDate": null,
       "countryOfOrigin": "United States",
       "countryFlag": "us"
@@ -32,10 +32,10 @@
 
     "father": {
       "_comment": "Your father's information",
-      "firstName": "Michael",
+      "firstName": "Philip",
       "lastName": "Downer",
       "photo": "images/people/father.jpg",
-      "birthDate": "1983-08-10",
+      "birthDate": "1982-04-25",
       "deathDate": null,
       "countryOfOrigin": "United States",
       "countryFlag": "us"
@@ -47,10 +47,10 @@
 
     "mothersMother": {
       "_comment": "Your mother's mother (maternal grandmother)",
-      "firstName": "Linda",
-      "lastName": "Johnson",
+      "firstName": "Kim",
+      "lastName": "Henselbecker",
       "photo": "images/people/maternal-grandmother.jpg",
-      "birthDate": "1960-06-15",
+      "birthDate": "1956-01-14",
       "deathDate": null,
       "countryOfOrigin": "United States",
       "countryFlag": "us"
@@ -58,35 +58,35 @@
 
     "mothersFather": {
       "_comment": "Your mother's father (maternal grandfather)",
-      "firstName": "Robert",
-      "lastName": "Johnson",
+      "firstName": "William",
+      "lastName": "Murray",
       "photo": "images/people/maternal-grandfather.jpg",
-      "birthDate": "1958-11-22",
+      "birthDate": "1955-11-23",
       "deathDate": null,
-      "countryOfOrigin": "Ireland",
-      "countryFlag": "ie"
+      "countryOfOrigin": "United States",
+      "countryFlag": "us"
     },
 
     "fathersMother": {
       "_comment": "Your father's mother (paternal grandmother)",
-      "firstName": "Patricia",
-      "lastName": "Downer",
+      "firstName": "Kristin",
+      "lastName": "Klindt",
       "photo": "images/people/paternal-grandmother.jpg",
-      "birthDate": "1959-02-14",
+      "birthDate": "1959-04-22",
       "deathDate": null,
-      "countryOfOrigin": "Germany",
-      "countryFlag": "de"
+      "countryOfOrigin": " United States",
+      "countryFlag": "us"
     },
 
     "fathersFather": {
       "_comment": "Your father's father (paternal grandfather)",
-      "firstName": "William",
+      "firstName": "Ronald",
       "lastName": "Downer",
       "photo": "images/people/paternal-grandfather.jpg",
-      "birthDate": "1955-09-30",
-      "deathDate": "2020-04-15",
-      "countryOfOrigin": "England",
-      "countryFlag": "gb"
+      "birthDate": "1952-09-08",
+      "deathDate": null,
+      "countryOfOrigin": "United States",
+      "countryFlag": "us"
     }
   },
 
@@ -95,90 +95,90 @@
 
     "mothersMothersMother": {
       "_comment": "Your maternal grandmother's mother",
-      "firstName": "Eleanor",
-      "lastName": "Smith",
+      "firstName": "Barbara",
+      "lastName": "Yendes",
       "photo": "images/people/ggm-mmm.jpg",
-      "birthDate": "1935-04-10",
-      "deathDate": "2015-12-20",
+      "birthDate": "1983-01-02",
+      "deathDate": "2021-11-15",
       "countryOfOrigin": "United States",
       "countryFlag": "us"
     },
 
     "mothersMothersFather": {
       "_comment": "Your maternal grandmother's father",
-      "firstName": "George",
-      "lastName": "Smith",
+      "firstName": "Henry",
+      "lastName": "Henselbecker",
       "photo": "images/people/ggf-mmf.jpg",
-      "birthDate": "1932-07-04",
-      "deathDate": "2010-03-15",
-      "countryOfOrigin": "Poland",
-      "countryFlag": "pl"
+      "birthDate": "1921-08-04",
+      "deathDate": "2011-01-04",
+      "countryOfOrigin": "United States",
+      "countryFlag": "us"
     },
 
     "mothersFathersMother": {
       "_comment": "Your maternal grandfather's mother",
-      "firstName": "Margaret",
-      "lastName": "O'Brien",
+      "firstName": "Ann",
+      "lastName": "Peterson",
       "photo": "images/people/ggm-mfm.jpg",
-      "birthDate": "1930-12-25",
-      "deathDate": "2018-06-10",
-      "countryOfOrigin": "Ireland",
-      "countryFlag": "ie"
+      "birthDate": "1935-12-23",
+      "deathDate":"1968-11-28",
+      "countryOfOrigin": "United States",
+      "countryFlag": "us"
     },
 
     "mothersFathersFather": {
       "_comment": "Your maternal grandfather's father",
-      "firstName": "Patrick",
-      "lastName": "Johnson",
+      "firstName": "Don",
+      "lastName": "Murray",
       "photo": "images/people/ggf-mff.jpg",
-      "birthDate": "1928-03-17",
-      "deathDate": "2005-11-28",
-      "countryOfOrigin": "Ireland",
-      "countryFlag": "ie"
+      "birthDate": "1927-06-07",
+      "deathDate": "2005-06-28",
+      "countryOfOrigin": "United States",
+      "countryFlag": "us"
     },
 
     "fathersMothersMother": {
       "_comment": "Your paternal grandmother's mother",
-      "firstName": "Helga",
-      "lastName": "Mueller",
+      "firstName": "Donna",
+      "lastName": "Spanier",
       "photo": "images/people/ggm-fmm.jpg",
-      "birthDate": "1934-09-08",
-      "deathDate": "2019-02-14",
-      "countryOfOrigin": "Germany",
-      "countryFlag": "de"
+      "birthDate": "1934-01-18",
+      "deathDate": "2022-06-01",
+      "countryOfOrigin": "United States",
+      "countryFlag": "us"
     },
 
     "fathersMothersFather": {
       "_comment": "Your paternal grandmother's father",
-      "firstName": "Hans",
-      "lastName": "Mueller",
+      "firstName": "Frederick",
+      "lastName": "Klindt",
       "photo": "images/people/ggf-fmf.jpg",
       "birthDate": "1930-05-20",
       "deathDate": "2008-08-30",
-      "countryOfOrigin": "Germany",
-      "countryFlag": "de"
+      "countryOfOrigin": "United States",
+      "countryFlag": "us"
     },
 
     "fathersFathersMother": {
       "_comment": "Your paternal grandfather's mother",
-      "firstName": "Elizabeth",
-      "lastName": "Williams",
+      "firstName": "Genevieve",
+      "lastName": "Pelot",
       "photo": "images/people/ggm-ffm.jpg",
-      "birthDate": "1928-11-11",
-      "deathDate": "2012-07-22",
-      "countryOfOrigin": "England",
-      "countryFlag": "gb"
+      "birthDate": "1921-11-07",
+      "deathDate": "1966-05-09",
+      "countryOfOrigin": "United States",
+      "countryFlag": "us"
     },
 
     "fathersFathersFather": {
       "_comment": "Your paternal grandfather's father",
-      "firstName": "Charles",
+      "firstName": "Silas",
       "lastName": "Downer",
       "photo": "images/people/ggf-fff.jpg",
-      "birthDate": "1925-01-05",
-      "deathDate": "2000-09-18",
-      "countryOfOrigin": "England",
-      "countryFlag": "gb"
+      "birthDate": "1920-03-14",
+      "deathDate": "2019-01-13",
+      "countryOfOrigin": "United States",
+      "countryFlag": "us"
     }
   }
 }
