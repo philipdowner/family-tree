@@ -58,11 +58,10 @@
    -------------------------------------------------------------------------- */
 .tree-card {
     cursor: pointer;
-    transition: transform var(--transition-base);
 }
 
-.tree-card:hover {
-    transform: scale(1.05);
+.tree-card:hover .tree-card-bg {
+    filter: drop-shadow(0 6px 20px rgba(0, 0, 0, 0.15));
 }
 
 .tree-card-bg {
@@ -165,10 +164,10 @@
 
 /* --------------------------------------------------------------------------
    Card Entry Animation
+   Note: Using opacity only to avoid overriding SVG transform positioning
    -------------------------------------------------------------------------- */
 .tree-card {
     opacity: 0;
-    transform: translateY(20px);
 }
 
 .tree-card.visible {
@@ -178,7 +177,6 @@
 @keyframes cardFadeIn {
     to {
         opacity: 1;
-        transform: translateY(0);
     }
 }
 

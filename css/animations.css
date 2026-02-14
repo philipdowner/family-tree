@@ -375,7 +375,10 @@
         stroke-dashoffset: 0;
     }
 
-    .tree-card,
+    .tree-card {
+        opacity: 1;
+    }
+
     .focus-person-card,
     .map-pin {
         opacity: 1;
