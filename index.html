@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Family Tree</title>
+
+    <!-- Offline-friendly: All resources loaded locally -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/tree.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <p class="loading-text">Loading Family Tree...</p>
+        </div>
+    </div>
+
+    <!-- Error Display -->
+    <div id="error-screen" class="error-screen hidden">
+        <div class="error-content">
+            <h2>Oops! Something went wrong</h2>
+            <p id="error-message"></p>
+            <p class="error-help">Check your family.json file and try again.</p>
+        </div>
+    </div>
+
+    <!-- Main Presentation Container -->
+    <main id="presentation" class="presentation hidden">
+
+        <!-- Slide 1: Title -->
+        <section id="slide-title" class="slide slide-title" data-slide="0" data-duration="5000">
+            <div class="title-content">
+                <h1 class="family-name"></h1>
+                <h2 class="title-subtitle">Family Tree</h2>
+                <p class="title-byline">A Journey Through Generations</p>
+            </div>
+        </section>
+
+        <!-- Slide 2: Full Tree -->
+        <section id="slide-tree" class="slide slide-tree" data-slide="1" data-duration="10000">
+            <div class="tree-container">
+                <svg id="tree-svg" class="tree-svg" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid meet">
+                    <!-- Tree branches will be drawn here -->
+                    <g id="tree-branches"></g>
+                    <!-- Person cards will be positioned here -->
+                    <g id="tree-cards"></g>
+                </svg>
+            </div>
+        </section>
+
+        <!-- Slide 3: Parents Focus -->
+        <section id="slide-parents" class="slide slide-focus" data-slide="2" data-duration="8000">
+            <h2 class="slide-heading">My Parents</h2>
+            <div class="focus-cards" id="parents-cards"></div>
+        </section>
+
+        <!-- Slide 4: Maternal Grandparents -->
+        <section id="slide-maternal-grandparents" class="slide slide-focus" data-slide="3" data-duration="8000">
+            <h2 class="slide-heading">Maternal Grandparents</h2>
+            <p class="slide-subheading">My Mother's Parents</p>
+            <div class="focus-cards" id="maternal-grandparents-cards"></div>
+        </section>
+
+        <!-- Slide 5: Paternal Grandparents -->
+        <section id="slide-paternal-grandparents" class="slide slide-focus" data-slide="4" data-duration="8000">
+            <h2 class="slide-heading">Paternal Grandparents</h2>
+            <p class="slide-subheading">My Father's Parents</p>
+            <div class="focus-cards" id="paternal-grandparents-cards"></div>
+        </section>
+
+        <!-- Slide 6: Maternal Great-Grandparents -->
+        <section id="slide-maternal-great" class="slide slide-focus" data-slide="5" data-duration="8000">
+            <h2 class="slide-heading">Maternal Great-Grandparents</h2>
+            <p class="slide-subheading">My Mother's Grandparents</p>
+            <div class="focus-cards focus-cards-four" id="maternal-great-cards"></div>
+        </section>
+
+        <!-- Slide 7: Paternal Great-Grandparents -->
+        <section id="slide-paternal-great" class="slide slide-focus" data-slide="6" data-duration="8000">
+            <h2 class="slide-heading">Paternal Great-Grandparents</h2>
+            <p class="slide-subheading">My Father's Grandparents</p>
+            <div class="focus-cards focus-cards-four" id="paternal-great-cards"></div>
+        </section>
+
+        <!-- Slide 8: World Map -->
+        <section id="slide-map" class="slide slide-map" data-slide="7" data-duration="12000">
+            <h2 class="slide-heading">Where We Come From</h2>
+            <div class="map-container" id="map-container">
+                <!-- SVG map will be loaded here -->
+            </div>
+            <div class="map-legend" id="map-legend"></div>
+        </section>
+
+        <!-- Slide 9: Closing -->
+        <section id="slide-closing" class="slide slide-closing" data-slide="8" data-duration="5000">
+            <div class="closing-content">
+                <h2 class="closing-title">Thank You!</h2>
+                <p class="closing-text">The <span class="family-name"></span> Family Tree</p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Slideshow Controls -->
+    <div id="controls" class="controls hidden">
+        <div class="progress-bar">
+            <div id="progress-fill" class="progress-fill"></div>
+        </div>
+        <div class="control-buttons">
+            <button id="btn-prev" class="control-btn" aria-label="Previous slide">
+                <svg viewBox="0 0 24 24" width="24" height="24">
+                    <path fill="currentColor" d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+                </svg>
+            </button>
+            <button id="btn-play" class="control-btn" aria-label="Play/Pause">
+                <svg id="icon-play" viewBox="0 0 24 24" width="24" height="24">
+                    <path fill="currentColor" d="M8 5v14l11-7z"/>
+                </svg>
+                <svg id="icon-pause" viewBox="0 0 24 24" width="24" height="24" class="hidden">
+                    <path fill="currentColor" d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+                </svg>
+            </button>
+            <button id="btn-next" class="control-btn" aria-label="Next slide">
+                <svg viewBox="0 0 24 24" width="24" height="24">
+                    <path fill="currentColor" d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+                </svg>
+            </button>
+        </div>
+        <div class="slide-counter">
+            <span id="current-slide">1</span> / <span id="total-slides">9</span>
+        </div>
+    </div>
+
+    <!-- Keyboard shortcuts hint -->
+    <div id="keyboard-hint" class="keyboard-hint">
+        <span>Space: Play/Pause</span>
+        <span>Arrows: Navigate</span>
+    </div>
+
+    <!-- Scripts -->
+    <script src="lib/anime.min.js"></script>
+    <script src="js/data-loader.js"></script>
+    <script src="js/tree-renderer.js"></script>
+    <script src="js/map-renderer.js"></script>
+    <script src="js/slideshow.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

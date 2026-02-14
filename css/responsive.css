@@ -1,0 +1,456 @@
+/* ==========================================================================
+   Family Tree - Responsive Styles
+   Optimized for iPad Safari and projector displays
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Large Desktop / Projector (1920px and up)
+   -------------------------------------------------------------------------- */
+@media (min-width: 1920px) {
+    :root {
+        --font-size-base: 1.125rem;
+        --font-size-3xl: 3.5rem;
+        --font-size-4xl: 5rem;
+    }
+
+    .tree-card-name {
+        font-size: 16px;
+    }
+
+    .focus-person-card {
+        padding: var(--space-2xl);
+        min-width: 320px;
+    }
+
+    .focus-person-photo {
+        width: 140px;
+        height: 140px;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   Standard Desktop (1200px - 1919px)
+   -------------------------------------------------------------------------- */
+@media (min-width: 1200px) and (max-width: 1919px) {
+    .slide {
+        padding: var(--space-xl);
+    }
+}
+
+/* --------------------------------------------------------------------------
+   Laptop / Small Desktop (992px - 1199px)
+   -------------------------------------------------------------------------- */
+@media (min-width: 992px) and (max-width: 1199px) {
+    :root {
+        --font-size-3xl: 2.5rem;
+        --font-size-4xl: 3.5rem;
+    }
+
+    .focus-cards {
+        gap: var(--space-xl);
+    }
+
+    .focus-person-card {
+        min-width: 240px;
+        max-width: 280px;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   Tablet Landscape / iPad Pro (768px - 991px)
+   -------------------------------------------------------------------------- */
+@media (min-width: 768px) and (max-width: 991px) {
+    :root {
+        --font-size-2xl: 1.75rem;
+        --font-size-3xl: 2.25rem;
+        --font-size-4xl: 3rem;
+    }
+
+    .slide {
+        padding: var(--space-lg);
+    }
+
+    /* Adjust tree for smaller screens */
+    .tree-svg {
+        max-height: 85vh;
+    }
+
+    /* Focus cards - 2 columns */
+    .focus-cards {
+        gap: var(--space-lg);
+    }
+
+    .focus-person-card {
+        min-width: 200px;
+        max-width: 240px;
+        padding: var(--space-lg);
+    }
+
+    .focus-person-photo {
+        width: 100px;
+        height: 100px;
+    }
+
+    .focus-person-name {
+        font-size: var(--font-size-lg);
+    }
+
+    /* 4-person cards */
+    .focus-cards-four .focus-person-card {
+        min-width: 180px;
+        max-width: 200px;
+    }
+
+    .focus-cards-four .focus-person-photo {
+        width: 70px;
+        height: 70px;
+    }
+
+    /* Controls */
+    .controls {
+        padding: var(--space-sm) var(--space-lg);
+    }
+
+    .progress-bar {
+        margin-right: var(--space-lg);
+    }
+
+    .slide-counter {
+        margin-left: var(--space-lg);
+    }
+}
+
+/* --------------------------------------------------------------------------
+   Tablet Portrait / iPad (600px - 767px)
+   -------------------------------------------------------------------------- */
+@media (min-width: 600px) and (max-width: 767px) {
+    :root {
+        --font-size-xl: 1.25rem;
+        --font-size-2xl: 1.5rem;
+        --font-size-3xl: 2rem;
+        --font-size-4xl: 2.5rem;
+    }
+
+    .slide {
+        padding: var(--space-md);
+    }
+
+    .slide-heading {
+        font-size: var(--font-size-2xl);
+        margin-bottom: var(--space-xs);
+    }
+
+    .slide-subheading {
+        font-size: var(--font-size-base);
+        margin-bottom: var(--space-lg);
+    }
+
+    /* Tree adjustments */
+    .tree-container {
+        padding: var(--space-sm);
+    }
+
+    /* Focus cards - stack on smaller tablets */
+    .focus-cards {
+        flex-direction: column;
+        align-items: center;
+        gap: var(--space-md);
+    }
+
+    .focus-person-card {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .focus-cards-four {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .focus-cards-four .focus-person-card {
+        width: calc(50% - var(--space-md));
+        min-width: 140px;
+        max-width: 180px;
+    }
+
+    /* Map */
+    .map-container {
+        padding: var(--space-sm);
+    }
+
+    .map-legend {
+        padding: var(--space-md);
+        gap: var(--space-sm);
+    }
+
+    .legend-item {
+        font-size: var(--font-size-xs);
+        padding: var(--space-xs) var(--space-sm);
+    }
+
+    /* Controls */
+    .controls {
+        flex-wrap: wrap;
+        gap: var(--space-sm);
+        padding: var(--space-sm) var(--space-md);
+    }
+
+    .progress-bar {
+        order: 1;
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: var(--space-sm);
+    }
+
+    .control-buttons {
+        order: 2;
+    }
+
+    .slide-counter {
+        order: 3;
+        margin-left: auto;
+    }
+
+    /* Keyboard hints - hide on touch devices */
+    .keyboard-hint {
+        display: none;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   Mobile (below 600px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 599px) {
+    :root {
+        --font-size-lg: 1rem;
+        --font-size-xl: 1.125rem;
+        --font-size-2xl: 1.25rem;
+        --font-size-3xl: 1.5rem;
+        --font-size-4xl: 2rem;
+    }
+
+    .slide {
+        padding: var(--space-sm);
+    }
+
+    .slide-heading {
+        font-size: var(--font-size-xl);
+    }
+
+    .slide-subheading {
+        font-size: var(--font-size-sm);
+        margin-bottom: var(--space-md);
+    }
+
+    /* Title slide */
+    .title-content .family-name {
+        font-size: var(--font-size-3xl);
+    }
+
+    .title-subtitle {
+        font-size: var(--font-size-lg);
+    }
+
+    .title-byline {
+        font-size: var(--font-size-sm);
+    }
+
+    /* Tree - simplified view */
+    .tree-container {
+        overflow: auto;
+    }
+
+    /* Focus cards - single column */
+    .focus-cards,
+    .focus-cards-four {
+        flex-direction: column;
+        align-items: center;
+        gap: var(--space-sm);
+    }
+
+    .focus-person-card,
+    .focus-cards-four .focus-person-card {
+        width: 100%;
+        max-width: 280px;
+        padding: var(--space-md);
+    }
+
+    .focus-person-photo,
+    .focus-cards-four .focus-person-photo {
+        width: 80px;
+        height: 80px;
+        margin-bottom: var(--space-md);
+    }
+
+    .focus-person-name,
+    .focus-cards-four .focus-person-name {
+        font-size: var(--font-size-base);
+    }
+
+    /* Map */
+    .map-legend {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* Closing */
+    .closing-title {
+        font-size: var(--font-size-3xl);
+    }
+
+    .closing-text {
+        font-size: var(--font-size-base);
+    }
+
+    /* Controls */
+    .controls {
+        flex-wrap: wrap;
+        padding: var(--space-sm);
+    }
+
+    .progress-bar {
+        order: 1;
+        width: 100%;
+        margin: 0 0 var(--space-sm) 0;
+    }
+
+    .control-buttons {
+        order: 2;
+        flex: 1;
+        justify-content: center;
+    }
+
+    .slide-counter {
+        order: 3;
+        margin-left: auto;
+        font-size: var(--font-size-xs);
+    }
+
+    .keyboard-hint {
+        display: none;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   Touch Device Optimizations
+   -------------------------------------------------------------------------- */
+@media (hover: none) and (pointer: coarse) {
+    /* Larger touch targets */
+    .control-btn {
+        width: 48px;
+        height: 48px;
+    }
+
+    /* Remove hover effects that don't work well on touch */
+    .focus-person-card:hover {
+        transform: none;
+        box-shadow: var(--shadow-card);
+    }
+
+    .tree-card:hover {
+        transform: none;
+    }
+
+    /* Hide keyboard hints */
+    .keyboard-hint {
+        display: none;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   High DPI / Retina Display Support
+   -------------------------------------------------------------------------- */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .tree-branch {
+        stroke-width: 1.5;
+    }
+
+    .tree-card-bg {
+        filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.1));
+    }
+}
+
+/* --------------------------------------------------------------------------
+   Landscape Orientation Adjustments
+   -------------------------------------------------------------------------- */
+@media (orientation: landscape) and (max-height: 500px) {
+    .slide {
+        padding: var(--space-sm) var(--space-lg);
+    }
+
+    .slide-heading {
+        font-size: var(--font-size-xl);
+        margin-bottom: var(--space-xs);
+    }
+
+    .slide-subheading {
+        margin-bottom: var(--space-sm);
+    }
+
+    .focus-person-photo {
+        width: 60px;
+        height: 60px;
+    }
+
+    .controls {
+        padding: var(--space-xs) var(--space-md);
+    }
+}
+
+/* --------------------------------------------------------------------------
+   Print Styles (for any screenshots/exports)
+   -------------------------------------------------------------------------- */
+@media print {
+    .controls,
+    .keyboard-hint {
+        display: none !important;
+    }
+
+    .slide {
+        page-break-inside: avoid;
+    }
+
+    * {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   iPad Safari Specific Fixes
+   -------------------------------------------------------------------------- */
+@supports (-webkit-touch-callout: none) {
+    /* iOS Safari fixes */
+    .slide {
+        /* Fix for 100vh issues on iOS */
+        min-height: -webkit-fill-available;
+    }
+
+    /* Backdrop blur fallback for older iOS */
+    @supports not (backdrop-filter: blur(10px)) {
+        .focus-person-card,
+        .controls {
+            background: rgba(255, 255, 255, 0.95);
+        }
+    }
+}
+
+/* --------------------------------------------------------------------------
+   Fullscreen Mode
+   -------------------------------------------------------------------------- */
+:fullscreen .controls {
+    position: fixed;
+}
+
+:fullscreen .keyboard-hint {
+    display: none;
+}
+
+:-webkit-full-screen .controls {
+    position: fixed;
+}
+
+:-webkit-full-screen .keyboard-hint {
+    display: none;
+}

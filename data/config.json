@@ -1,0 +1,51 @@
+{
+  "_README": "Presentation settings - you can customize how your slideshow works here!",
+
+  "presentation": {
+    "_comment": "Control how the slideshow behaves",
+
+    "autoPlay": true,
+    "_autoPlayHelp": "Set to true to auto-advance slides, false to require manual clicks",
+
+    "showControls": true,
+    "_showControlsHelp": "Set to false to hide the control bar at the bottom",
+
+    "showKeyboardHints": true,
+    "_showKeyboardHintsHelp": "Set to false to hide the keyboard shortcut hints"
+  },
+
+  "timing": {
+    "_comment": "How long each slide shows (in milliseconds). 1000 = 1 second",
+
+    "titleSlide": 5000,
+    "treeSlide": 10000,
+    "parentsSlide": 8000,
+    "grandparentsSlide": 8000,
+    "greatGrandparentsSlide": 8000,
+    "mapSlide": 12000,
+    "closingSlide": 5000
+  },
+
+  "animations": {
+    "_comment": "Animation settings",
+
+    "enabled": true,
+    "_enabledHelp": "Set to false to disable all animations (good for slower computers)",
+
+    "treeGrowthDuration": 2000,
+    "_treeGrowthDurationHelp": "How long the tree takes to grow (milliseconds)",
+
+    "cardFadeDelay": 200,
+    "_cardFadeDelayHelp": "Delay between each card appearing (milliseconds)"
+  },
+
+  "map": {
+    "_comment": "World map settings",
+
+    "showPinLabels": true,
+    "_showPinLabelsHelp": "Show country names on the map pins",
+
+    "pinDropDelay": 300,
+    "_pinDropDelayHelp": "Delay between each pin dropping (milliseconds)"
+  }
+}

@@ -1,0 +1,258 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500" class="world-map">
+  <defs>
+    <style>
+      .land { fill: #E8ECEF; stroke: #D1D9E0; stroke-width: 0.5; }
+      .water { fill: #F8FAFB; }
+    </style>
+  </defs>
+
+  <!-- Background (water) -->
+  <rect class="water" width="1000" height="500"/>
+
+  <!-- Simplified world continents -->
+  <g class="continents">
+
+    <!-- North America -->
+    <path class="land" d="
+      M 50 80
+      L 120 60
+      L 180 70
+      L 240 50
+      L 280 60
+      L 300 100
+      L 280 140
+      L 250 180
+      L 220 200
+      L 180 240
+      L 160 280
+      L 140 300
+      L 120 280
+      L 100 260
+      L 90 220
+      L 80 180
+      L 60 140
+      L 50 100
+      Z
+    "/>
+
+    <!-- Central America & Caribbean -->
+    <path class="land" d="
+      M 160 280
+      L 180 290
+      L 200 300
+      L 220 310
+      L 240 320
+      L 220 340
+      L 200 350
+      L 180 340
+      L 160 320
+      L 150 300
+      Z
+    "/>
+
+    <!-- Caribbean Islands -->
+    <ellipse class="land" cx="260" cy="280" rx="15" ry="8"/>
+    <ellipse class="land" cx="280" cy="275" rx="10" ry="5"/>
+    <ellipse class="land" cx="295" cy="280" rx="8" ry="4"/>
+
+    <!-- South America -->
+    <path class="land" d="
+      M 220 340
+      L 260 330
+      L 320 340
+      L 350 380
+      L 360 420
+      L 350 460
+      L 320 480
+      L 280 470
+      L 250 450
+      L 230 420
+      L 220 380
+      L 230 360
+      Z
+    "/>
+
+    <!-- Europe -->
+    <path class="land" d="
+      M 440 120
+      L 480 100
+      L 520 90
+      L 560 100
+      L 580 120
+      L 600 110
+      L 580 140
+      L 560 160
+      L 520 180
+      L 480 190
+      L 460 200
+      L 440 190
+      L 420 170
+      L 430 140
+      Z
+    "/>
+
+    <!-- British Isles -->
+    <path class="land" d="
+      M 430 130
+      L 450 120
+      L 460 130
+      L 455 145
+      L 440 150
+      L 430 140
+      Z
+    "/>
+    <ellipse class="land" cx="420" cy="140" rx="12" ry="10"/>
+
+    <!-- Scandinavia -->
+    <path class="land" d="
+      M 500 60
+      L 520 50
+      L 540 60
+      L 550 80
+      L 540 100
+      L 520 110
+      L 500 100
+      L 490 80
+      Z
+    "/>
+
+    <!-- Africa -->
+    <path class="land" d="
+      M 440 220
+      L 500 210
+      L 560 220
+      L 600 260
+      L 610 320
+      L 600 380
+      L 560 420
+      L 520 430
+      L 480 420
+      L 450 380
+      L 440 320
+      L 450 260
+      Z
+    "/>
+
+    <!-- Middle East -->
+    <path class="land" d="
+      M 560 200
+      L 620 190
+      L 660 210
+      L 680 240
+      L 660 270
+      L 620 280
+      L 580 270
+      L 560 240
+      Z
+    "/>
+
+    <!-- Russia/Northern Asia -->
+    <path class="land" d="
+      M 580 60
+      L 700 40
+      L 820 50
+      L 900 70
+      L 920 100
+      L 900 130
+      L 820 140
+      L 740 150
+      L 660 140
+      L 600 120
+      L 580 90
+      Z
+    "/>
+
+    <!-- India/South Asia -->
+    <path class="land" d="
+      M 680 240
+      L 720 230
+      L 760 250
+      L 770 300
+      L 750 340
+      L 710 350
+      L 680 330
+      L 670 290
+      Z
+    "/>
+
+    <!-- Southeast Asia -->
+    <path class="land" d="
+      M 760 280
+      L 800 270
+      L 830 290
+      L 840 320
+      L 820 350
+      L 780 360
+      L 760 340
+      L 755 310
+      Z
+    "/>
+
+    <!-- China/East Asia -->
+    <path class="land" d="
+      M 740 150
+      L 820 140
+      L 880 160
+      L 900 200
+      L 880 240
+      L 840 260
+      L 780 260
+      L 740 240
+      L 720 200
+      L 730 170
+      Z
+    "/>
+
+    <!-- Japan -->
+    <path class="land" d="
+      M 890 180
+      L 910 170
+      L 920 190
+      L 915 220
+      L 900 230
+      L 885 210
+      Z
+    "/>
+
+    <!-- Korea -->
+    <ellipse class="land" cx="870" cy="210" rx="12" ry="20"/>
+
+    <!-- Indonesia/Philippines -->
+    <ellipse class="land" cx="820" cy="330" rx="20" ry="8"/>
+    <ellipse class="land" cx="850" cy="320" rx="15" ry="6"/>
+    <ellipse class="land" cx="860" cy="340" rx="18" ry="7"/>
+    <ellipse class="land" cx="840" cy="290" rx="10" ry="6"/>
+
+    <!-- Australia -->
+    <path class="land" d="
+      M 800 380
+      L 880 370
+      L 920 400
+      L 930 440
+      L 900 470
+      L 840 480
+      L 800 460
+      L 790 420
+      Z
+    "/>
+
+    <!-- New Zealand -->
+    <ellipse class="land" cx="950" cy="450" rx="12" ry="25"/>
+
+    <!-- Greenland -->
+    <path class="land" d="
+      M 320 40
+      L 380 30
+      L 420 50
+      L 410 90
+      L 370 100
+      L 330 80
+      Z
+    "/>
+
+  </g>
+
+  <!-- Pin container - pins will be added here dynamically -->
+  <g id="map-pins"></g>
+
+</svg>

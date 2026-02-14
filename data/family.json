@@ -1,0 +1,184 @@
+{
+  "_README": "Welcome! This file contains your family tree data. Edit it to add your family members!",
+  "_TIP": "Be careful with commas - every line inside an object needs a comma EXCEPT the last one!",
+  "_HELP": "If you see an error, check: 1) All quotes are straight quotes (\") not curly, 2) Every { has a matching }, 3) Commas are in the right places",
+
+  "familyName": "Downer",
+
+  "child": {
+    "_comment": "This is YOU! Fill in your information below.",
+    "firstName": "Mason",
+    "lastName": "Downer",
+    "photo": "images/people/mason.jpg",
+    "birthDate": "2014-05-15",
+    "deathDate": null,
+    "countryOfOrigin": "United States",
+    "countryFlag": "us"
+  },
+
+  "parents": {
+    "_comment": "Your mother and father go here.",
+
+    "mother": {
+      "_comment": "Your mother's information",
+      "firstName": "Sarah",
+      "lastName": "Downer",
+      "photo": "images/people/mother.jpg",
+      "birthDate": "1985-03-20",
+      "deathDate": null,
+      "countryOfOrigin": "United States",
+      "countryFlag": "us"
+    },
+
+    "father": {
+      "_comment": "Your father's information",
+      "firstName": "Michael",
+      "lastName": "Downer",
+      "photo": "images/people/father.jpg",
+      "birthDate": "1983-08-10",
+      "deathDate": null,
+      "countryOfOrigin": "United States",
+      "countryFlag": "us"
+    }
+  },
+
+  "grandparents": {
+    "_comment": "Your 4 grandparents go here. 'mothersMother' means your mother's mother (your maternal grandmother).",
+
+    "mothersMother": {
+      "_comment": "Your mother's mother (maternal grandmother)",
+      "firstName": "Linda",
+      "lastName": "Johnson",
+      "photo": "images/people/maternal-grandmother.jpg",
+      "birthDate": "1960-06-15",
+      "deathDate": null,
+      "countryOfOrigin": "United States",
+      "countryFlag": "us"
+    },
+
+    "mothersFather": {
+      "_comment": "Your mother's father (maternal grandfather)",
+      "firstName": "Robert",
+      "lastName": "Johnson",
+      "photo": "images/people/maternal-grandfather.jpg",
+      "birthDate": "1958-11-22",
+      "deathDate": null,
+      "countryOfOrigin": "Ireland",
+      "countryFlag": "ie"
+    },
+
+    "fathersMother": {
+      "_comment": "Your father's mother (paternal grandmother)",
+      "firstName": "Patricia",
+      "lastName": "Downer",
+      "photo": "images/people/paternal-grandmother.jpg",
+      "birthDate": "1959-02-14",
+      "deathDate": null,
+      "countryOfOrigin": "Germany",
+      "countryFlag": "de"
+    },
+
+    "fathersFather": {
+      "_comment": "Your father's father (paternal grandfather)",
+      "firstName": "William",
+      "lastName": "Downer",
+      "photo": "images/people/paternal-grandfather.jpg",
+      "birthDate": "1955-09-30",
+      "deathDate": "2020-04-15",
+      "countryOfOrigin": "England",
+      "countryFlag": "gb"
+    }
+  },
+
+  "greatGrandparents": {
+    "_comment": "Your 8 great-grandparents. The naming follows the same pattern - 'mothersMothersMother' is your mother's mother's mother.",
+
+    "mothersMothersMother": {
+      "_comment": "Your maternal grandmother's mother",
+      "firstName": "Eleanor",
+      "lastName": "Smith",
+      "photo": "images/people/ggm-mmm.jpg",
+      "birthDate": "1935-04-10",
+      "deathDate": "2015-12-20",
+      "countryOfOrigin": "United States",
+      "countryFlag": "us"
+    },
+
+    "mothersMothersFather": {
+      "_comment": "Your maternal grandmother's father",
+      "firstName": "George",
+      "lastName": "Smith",
+      "photo": "images/people/ggf-mmf.jpg",
+      "birthDate": "1932-07-04",
+      "deathDate": "2010-03-15",
+      "countryOfOrigin": "Poland",
+      "countryFlag": "pl"
+    },
+
+    "mothersFathersMother": {
+      "_comment": "Your maternal grandfather's mother",
+      "firstName": "Margaret",
+      "lastName": "O'Brien",
+      "photo": "images/people/ggm-mfm.jpg",
+      "birthDate": "1930-12-25",
+      "deathDate": "2018-06-10",
+      "countryOfOrigin": "Ireland",
+      "countryFlag": "ie"
+    },
+
+    "mothersFathersFather": {
+      "_comment": "Your maternal grandfather's father",
+      "firstName": "Patrick",
+      "lastName": "Johnson",
+      "photo": "images/people/ggf-mff.jpg",
+      "birthDate": "1928-03-17",
+      "deathDate": "2005-11-28",
+      "countryOfOrigin": "Ireland",
+      "countryFlag": "ie"
+    },
+
+    "fathersMothersMother": {
+      "_comment": "Your paternal grandmother's mother",
+      "firstName": "Helga",
+      "lastName": "Mueller",
+      "photo": "images/people/ggm-fmm.jpg",
+      "birthDate": "1934-09-08",
+      "deathDate": "2019-02-14",
+      "countryOfOrigin": "Germany",
+      "countryFlag": "de"
+    },
+
+    "fathersMothersFather": {
+      "_comment": "Your paternal grandmother's father",
+      "firstName": "Hans",
+      "lastName": "Mueller",
+      "photo": "images/people/ggf-fmf.jpg",
+      "birthDate": "1930-05-20",
+      "deathDate": "2008-08-30",
+      "countryOfOrigin": "Germany",
+      "countryFlag": "de"
+    },
+
+    "fathersFathersMother": {
+      "_comment": "Your paternal grandfather's mother",
+      "firstName": "Elizabeth",
+      "lastName": "Williams",
+      "photo": "images/people/ggm-ffm.jpg",
+      "birthDate": "1928-11-11",
+      "deathDate": "2012-07-22",
+      "countryOfOrigin": "England",
+      "countryFlag": "gb"
+    },
+
+    "fathersFathersFather": {
+      "_comment": "Your paternal grandfather's father",
+      "firstName": "Charles",
+      "lastName": "Downer",
+      "photo": "images/people/ggf-fff.jpg",
+      "birthDate": "1925-01-05",
+      "deathDate": "2000-09-18",
+      "countryOfOrigin": "England",
+      "countryFlag": "gb"
+    }
+  }
+}

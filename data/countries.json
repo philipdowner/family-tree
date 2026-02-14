@@ -1,0 +1,257 @@
+{
+  "_README": "Country coordinates for the world map. You don't need to edit this file!",
+  "_NOTE": "Coordinates are percentages (0-100) representing position on the SVG map",
+
+  "countries": {
+    "us": {
+      "name": "United States",
+      "x": 20,
+      "y": 45
+    },
+    "ca": {
+      "name": "Canada",
+      "x": 18,
+      "y": 32
+    },
+    "mx": {
+      "name": "Mexico",
+      "x": 17,
+      "y": 55
+    },
+    "gb": {
+      "name": "England",
+      "x": 47,
+      "y": 35
+    },
+    "ie": {
+      "name": "Ireland",
+      "x": 44,
+      "y": 35
+    },
+    "de": {
+      "name": "Germany",
+      "x": 51,
+      "y": 37
+    },
+    "fr": {
+      "name": "France",
+      "x": 48,
+      "y": 40
+    },
+    "it": {
+      "name": "Italy",
+      "x": 52,
+      "y": 44
+    },
+    "es": {
+      "name": "Spain",
+      "x": 45,
+      "y": 45
+    },
+    "pl": {
+      "name": "Poland",
+      "x": 54,
+      "y": 37
+    },
+    "ru": {
+      "name": "Russia",
+      "x": 70,
+      "y": 32
+    },
+    "cn": {
+      "name": "China",
+      "x": 77,
+      "y": 45
+    },
+    "jp": {
+      "name": "Japan",
+      "x": 86,
+      "y": 43
+    },
+    "kr": {
+      "name": "South Korea",
+      "x": 83,
+      "y": 45
+    },
+    "in": {
+      "name": "India",
+      "x": 72,
+      "y": 52
+    },
+    "ph": {
+      "name": "Philippines",
+      "x": 83,
+      "y": 58
+    },
+    "vn": {
+      "name": "Vietnam",
+      "x": 79,
+      "y": 56
+    },
+    "ng": {
+      "name": "Nigeria",
+      "x": 51,
+      "y": 60
+    },
+    "za": {
+      "name": "South Africa",
+      "x": 56,
+      "y": 78
+    },
+    "eg": {
+      "name": "Egypt",
+      "x": 56,
+      "y": 50
+    },
+    "br": {
+      "name": "Brazil",
+      "x": 32,
+      "y": 68
+    },
+    "ar": {
+      "name": "Argentina",
+      "x": 28,
+      "y": 82
+    },
+    "au": {
+      "name": "Australia",
+      "x": 85,
+      "y": 75
+    },
+    "nz": {
+      "name": "New Zealand",
+      "x": 94,
+      "y": 82
+    },
+    "se": {
+      "name": "Sweden",
+      "x": 53,
+      "y": 28
+    },
+    "no": {
+      "name": "Norway",
+      "x": 51,
+      "y": 26
+    },
+    "nl": {
+      "name": "Netherlands",
+      "x": 49,
+      "y": 36
+    },
+    "be": {
+      "name": "Belgium",
+      "x": 49,
+      "y": 38
+    },
+    "ch": {
+      "name": "Switzerland",
+      "x": 50,
+      "y": 40
+    },
+    "at": {
+      "name": "Austria",
+      "x": 52,
+      "y": 40
+    },
+    "gr": {
+      "name": "Greece",
+      "x": 55,
+      "y": 46
+    },
+    "pt": {
+      "name": "Portugal",
+      "x": 43,
+      "y": 45
+    },
+    "ua": {
+      "name": "Ukraine",
+      "x": 58,
+      "y": 38
+    },
+    "il": {
+      "name": "Israel",
+      "x": 58,
+      "y": 49
+    },
+    "tr": {
+      "name": "Turkey",
+      "x": 58,
+      "y": 44
+    },
+    "sa": {
+      "name": "Saudi Arabia",
+      "x": 62,
+      "y": 52
+    },
+    "pk": {
+      "name": "Pakistan",
+      "x": 68,
+      "y": 48
+    },
+    "id": {
+      "name": "Indonesia",
+      "x": 80,
+      "y": 65
+    },
+    "my": {
+      "name": "Malaysia",
+      "x": 78,
+      "y": 62
+    },
+    "th": {
+      "name": "Thailand",
+      "x": 77,
+      "y": 56
+    },
+    "ke": {
+      "name": "Kenya",
+      "x": 59,
+      "y": 62
+    },
+    "gh": {
+      "name": "Ghana",
+      "x": 47,
+      "y": 60
+    },
+    "co": {
+      "name": "Colombia",
+      "x": 25,
+      "y": 60
+    },
+    "pe": {
+      "name": "Peru",
+      "x": 24,
+      "y": 68
+    },
+    "cl": {
+      "name": "Chile",
+      "x": 26,
+      "y": 80
+    },
+    "cu": {
+      "name": "Cuba",
+      "x": 23,
+      "y": 53
+    },
+    "jm": {
+      "name": "Jamaica",
+      "x": 24,
+      "y": 55
+    },
+    "pr": {
+      "name": "Puerto Rico",
+      "x": 27,
+      "y": 55
+    },
+    "ht": {
+      "name": "Haiti",
+      "x": 25,
+      "y": 55
+    },
+    "do": {
+      "name": "Dominican Republic",
+      "x": 26,
+      "y": 55
+    }
+  }
+}
