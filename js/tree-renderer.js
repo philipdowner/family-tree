@@ -469,12 +469,14 @@ const TreeRenderer = {
             const card = document.createElement('div');
             card.className = `focus-person-card ${person.side || ''}`;
 
-            // Get initials for placeholder
+            // Get initials for placeholder (only used when no photo)
             const initials = (person.firstName?.[0] || '') + (person.lastName?.[0] || '');
+            const hasPhoto = person.photo ? true : false;
 
             card.innerHTML = `
-                <div class="focus-person-photo placeholder" data-initials="${initials}"
-                     ${person.photo ? `style="background-image: url('${person.photo}'); background-size: cover;"` : ''}>
+                <div class="focus-person-photo ${hasPhoto ? '' : 'placeholder'}"
+                     ${hasPhoto ? '' : `data-initials="${initials}"`}
+                     ${hasPhoto ? `style="background-image: url('${person.photo}'); background-size: cover; background-position: center;"` : ''}>
                 </div>
                 <h3 class="focus-person-name">${person.firstName} ${person.lastName}</h3>
                 <p class="focus-person-dates">${DataLoader.getDateRange(person) || ''}</p>
