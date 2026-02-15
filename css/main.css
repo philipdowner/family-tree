@@ -433,7 +433,7 @@ button {
 }
 
 .map-container {
-    flex: 1;
+    flex: 0 1 auto;
     width: 100%;
     max-width: 1400px;
     display: flex;
@@ -445,7 +445,7 @@ button {
 .map-container svg {
     width: 100%;
     height: auto;
-    max-height: 70vh;
+    max-height: 60vh;
 }
 
 .map-legend {
@@ -453,7 +453,9 @@ button {
     flex-wrap: wrap;
     gap: var(--space-md);
     justify-content: center;
-    padding: var(--space-lg);
+    padding: var(--space-md) var(--space-lg);
+    flex: 0 0 auto;
+    min-height: 60px;
 }
 
 .legend-item {
@@ -464,14 +466,16 @@ button {
     padding: var(--space-sm) var(--space-md);
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-sm);
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-base);
+    font-weight: 500;
 }
 
 .legend-dot {
-    width: 12px;
-    height: 12px;
+    width: 16px;
+    height: 16px;
     border-radius: var(--radius-full);
     background: var(--color-primary);
+    flex-shrink: 0;
 }
 
 /* --------------------------------------------------------------------------
