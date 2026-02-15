@@ -1,5 +1,10 @@
 {
   "disabledMcpjsonServers": [
     "obsidian"
-  ]
+  ],
+  "permissions": {
+    "allow": [
+      "Bash(python3:*)"
+    ]
+  }
 }

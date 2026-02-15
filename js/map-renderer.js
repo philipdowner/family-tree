@@ -173,11 +173,15 @@ const MapRenderer = {
      * @returns {SVGElement} Pin group element
      */
     createPin(x, y, data, index) {
+        // Create outer group for positioning (not affected by CSS)
+        const positionGroup = document.createElementNS(this.SVG_NS, 'g');
+        positionGroup.setAttribute('transform', `translate(${x}, ${y})`);
+
+        // Create inner group for animation (affected by CSS)
         const group = document.createElementNS(this.SVG_NS, 'g');
         group.setAttribute('class', 'map-pin');
         group.setAttribute('data-country', data.code);
         group.setAttribute('data-delay', index * 300);
-        group.setAttribute('transform', `translate(${x}, ${y})`);
 
         // Pulse animation circle (behind the pin)
         const pulse = document.createElementNS(this.SVG_NS, 'circle');
@@ -243,7 +247,9 @@ const MapRenderer = {
             group.appendChild(badge);
         }
 
-        return group;
+        // Nest animated group inside position group
+        positionGroup.appendChild(group);
+        return positionGroup;
     },
 
     /**
