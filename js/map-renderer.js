@@ -129,8 +129,9 @@ const MapRenderer = {
         }
 
         if (familyData.greatGrandparents) {
-            Object.values(familyData.greatGrandparents).forEach(person => {
-                if (person && !person._comment) {
+            Object.entries(familyData.greatGrandparents).forEach(([key, person]) => {
+                // Skip properties that start with underscore (like _comment)
+                if (!key.startsWith('_') && person && typeof person === 'object') {
                     addMember(person, 'Great-grandparent');
                 }
             });
