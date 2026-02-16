@@ -1,6 +1,6 @@
 /**
  * Map Renderer Module
- * Handles the world map with animated pins showing countries of origin
+ * Vintage cartography-styled world map with animated teardrop pins
  */
 
 const MapRenderer = {
@@ -11,11 +11,12 @@ const MapRenderer = {
     mapWidth: 4378.13,
     mapHeight: 2434.94,
 
-    // Pin configuration (larger for the bigger map)
+    // Pin configuration
     pinConfig: {
         radius: 35,
         pulseRadius: 60,
-        labelOffset: 55
+        labelOffset: 80,
+        teardropHeight: 50
     },
 
     // Store references
@@ -45,6 +46,12 @@ const MapRenderer = {
 
         if (!this.mapSVG) return;
 
+        // Apply vintage styling to map paths
+        this.applyVintageStyle();
+
+        // Add compass rose
+        this.addCompassRose();
+
         // Get pins group
         this.pinsGroup = this.mapSVG.getElementById('map-pins');
         if (!this.pinsGroup) {
@@ -59,8 +66,13 @@ const MapRenderer = {
         // Collect countries with family members
         const countryMembers = this.collectCountryData(familyData);
 
-        // Create pins for each country
-        this.createPins(countryMembers, countriesData);
+        // Check if single-country fallback needed
+        const countryKeys = Object.keys(countryMembers);
+        if (countryKeys.length === 1) {
+            this.createSingleCountryDisplay(countryMembers[countryKeys[0]], countriesData);
+        } else {
+            this.createPins(countryMembers, countriesData);
+        }
 
         // Create legend
         this.createLegend(countryMembers, countriesData);
@@ -86,6 +98,136 @@ const MapRenderer = {
             console.error('Error loading map:', error);
             this.container.innerHTML = '<p class="error">Could not load map</p>';
         }
+    },
+
+    /**
+     * Apply vintage cartography styling to the map SVG paths
+     */
+    applyVintageStyle() {
+        if (!this.mapSVG) return;
+
+        // Style all land paths
+        const paths = this.mapSVG.querySelectorAll('path');
+        paths.forEach(path => {
+            const currentFill = path.getAttribute('fill');
+            const currentClass = path.getAttribute('class') || '';
+
+            // Skip if it's a water/ocean element or already a pin
+            if (currentClass.includes('map-pin') || currentClass.includes('ocean')) return;
+
+            // Apply warm parchment tones to land masses
+            if (currentFill && currentFill !== 'none') {
+                path.setAttribute('fill', '#E8DCC8');
+                path.setAttribute('stroke', '#C4A882');
+                path.setAttribute('stroke-width', '0.5');
+            }
+        });
+
+        // Style background/ocean if present
+        const rects = this.mapSVG.querySelectorAll('rect');
+        rects.forEach(rect => {
+            rect.setAttribute('fill', '#D4CFC0');
+        });
+
+        // Add a vintage border frame around the map
+        const viewBox = this.mapSVG.getAttribute('viewBox');
+        if (viewBox) {
+            const [, , vw, vh] = viewBox.split(' ').map(Number);
+            const frame = document.createElementNS(this.SVG_NS, 'rect');
+            frame.setAttribute('x', 10);
+            frame.setAttribute('y', 10);
+            frame.setAttribute('width', vw - 20);
+            frame.setAttribute('height', vh - 20);
+            frame.setAttribute('fill', 'none');
+            frame.setAttribute('stroke', '#8B7355');
+            frame.setAttribute('stroke-width', '4');
+            frame.setAttribute('rx', 8);
+            this.mapSVG.appendChild(frame);
+        }
+    },
+
+    /**
+     * Add a decorative compass rose to the map
+     */
+    addCompassRose() {
+        if (!this.mapSVG) return;
+
+        const g = document.createElementNS(this.SVG_NS, 'g');
+        // Position in bottom-right area
+        g.setAttribute('transform', `translate(${this.mapWidth * 0.88}, ${this.mapHeight * 0.78})`);
+        g.setAttribute('opacity', '0.25');
+
+        const size = 80;
+
+        // Outer circle
+        const circle = document.createElementNS(this.SVG_NS, 'circle');
+        circle.setAttribute('r', size);
+        circle.setAttribute('fill', 'none');
+        circle.setAttribute('stroke', '#8B7355');
+        circle.setAttribute('stroke-width', '2');
+        g.appendChild(circle);
+
+        // Inner circle
+        const innerCircle = document.createElementNS(this.SVG_NS, 'circle');
+        innerCircle.setAttribute('r', size * 0.3);
+        innerCircle.setAttribute('fill', 'none');
+        innerCircle.setAttribute('stroke', '#8B7355');
+        innerCircle.setAttribute('stroke-width', '1');
+        g.appendChild(innerCircle);
+
+        // Cardinal direction points (N, S, E, W)
+        const directions = [
+            { angle: 0, label: 'N', length: size * 0.9 },
+            { angle: 90, label: 'E', length: size * 0.7 },
+            { angle: 180, label: 'S', length: size * 0.7 },
+            { angle: 270, label: 'W', length: size * 0.7 }
+        ];
+
+        directions.forEach(d => {
+            const rad = (d.angle - 90) * Math.PI / 180;
+            const x2 = Math.cos(rad) * d.length;
+            const y2 = Math.sin(rad) * d.length;
+
+            // Line from center to tip
+            const line = document.createElementNS(this.SVG_NS, 'line');
+            line.setAttribute('x1', 0);
+            line.setAttribute('y1', 0);
+            line.setAttribute('x2', x2);
+            line.setAttribute('y2', y2);
+            line.setAttribute('stroke', '#8B7355');
+            line.setAttribute('stroke-width', d.label === 'N' ? 3 : 1.5);
+            g.appendChild(line);
+
+            // Letter label
+            const lx = Math.cos(rad) * (size + 18);
+            const ly = Math.sin(rad) * (size + 18);
+            const text = document.createElementNS(this.SVG_NS, 'text');
+            text.setAttribute('x', lx);
+            text.setAttribute('y', ly);
+            text.setAttribute('text-anchor', 'middle');
+            text.setAttribute('dominant-baseline', 'central');
+            text.setAttribute('fill', '#8B7355');
+            text.setAttribute('font-size', '24');
+            text.setAttribute('font-family', "'Freight Display Pro', Georgia, serif");
+            text.setAttribute('font-weight', d.label === 'N' ? '700' : '400');
+            text.textContent = d.label;
+            g.appendChild(text);
+        });
+
+        // Intercardinal lines (NE, SE, SW, NW) - thinner
+        [45, 135, 225, 315].forEach(angle => {
+            const rad = (angle - 90) * Math.PI / 180;
+            const line = document.createElementNS(this.SVG_NS, 'line');
+            line.setAttribute('x1', 0);
+            line.setAttribute('y1', 0);
+            line.setAttribute('x2', Math.cos(rad) * size * 0.5);
+            line.setAttribute('y2', Math.sin(rad) * size * 0.5);
+            line.setAttribute('stroke', '#8B7355');
+            line.setAttribute('stroke-width', '0.75');
+            g.appendChild(line);
+        });
+
+        this.mapSVG.appendChild(g);
     },
 
     /**
@@ -130,7 +272,6 @@ const MapRenderer = {
 
         if (familyData.greatGrandparents) {
             Object.entries(familyData.greatGrandparents).forEach(([key, person]) => {
-                // Skip properties that start with underscore (like _comment)
                 if (!key.startsWith('_') && person && typeof person === 'object') {
                     addMember(person, 'Great-grandparent');
                 }
@@ -141,7 +282,7 @@ const MapRenderer = {
     },
 
     /**
-     * Create pins on the map
+     * Create teardrop pins on the map
      * @param {Object} countryMembers - Country to members mapping
      * @param {Object} countriesData - Countries coordinate data
      */
@@ -155,102 +296,235 @@ const MapRenderer = {
                 return;
             }
 
-            // Calculate pixel position from percentage
             const x = (countryCoords.x / 100) * this.mapWidth;
             const y = (countryCoords.y / 100) * this.mapHeight;
 
-            // Create pin group
-            const pinGroup = this.createPin(x, y, data, index);
+            const pinGroup = this.createTeardropPin(x, y, data, index);
             this.pinsGroup.appendChild(pinGroup);
         });
     },
 
     /**
-     * Create a single pin element
+     * Create a teardrop-shaped pin
      * @param {number} x - X coordinate
      * @param {number} y - Y coordinate
      * @param {Object} data - Country data with members
      * @param {number} index - Pin index for animation delay
      * @returns {SVGElement} Pin group element
      */
-    createPin(x, y, data, index) {
-        // Create outer group for positioning (not affected by CSS)
+    createTeardropPin(x, y, data, index) {
         const positionGroup = document.createElementNS(this.SVG_NS, 'g');
         positionGroup.setAttribute('transform', `translate(${x}, ${y})`);
 
-        // Create inner group for animation (affected by CSS)
         const group = document.createElementNS(this.SVG_NS, 'g');
         group.setAttribute('class', 'map-pin');
         group.setAttribute('data-country', data.code);
         group.setAttribute('data-delay', index * 300);
 
-        // Pulse animation circle (behind the pin)
+        const r = this.pinConfig.radius;
+
+        // Pulse animation circle
         const pulse = document.createElementNS(this.SVG_NS, 'circle');
         pulse.setAttribute('class', 'map-pin-pulse');
         pulse.setAttribute('cx', 0);
         pulse.setAttribute('cy', 0);
         pulse.setAttribute('r', this.pinConfig.pulseRadius);
-        pulse.setAttribute('fill', '#0D7377');
+        pulse.setAttribute('fill', '#2D6A4F');
         pulse.setAttribute('opacity', '0.3');
         group.appendChild(pulse);
 
-        // Main pin circle
-        const pin = document.createElementNS(this.SVG_NS, 'circle');
-        pin.setAttribute('cx', 0);
-        pin.setAttribute('cy', 0);
-        pin.setAttribute('r', this.pinConfig.radius);
-        pin.setAttribute('fill', '#0D7377');
-        pin.setAttribute('stroke', '#FFFFFF');
-        pin.setAttribute('stroke-width', '8');
-        group.appendChild(pin);
+        // Teardrop shape path (point at bottom, round at top)
+        const teardrop = document.createElementNS(this.SVG_NS, 'path');
+        const h = this.pinConfig.teardropHeight;
+        teardrop.setAttribute('d', `M0,${h} C-${r*0.8},${h*0.5} -${r},-${r*0.3} 0,-${r} C${r},-${r*0.3} ${r*0.8},${h*0.5} 0,${h} Z`);
+        teardrop.setAttribute('fill', '#2D6A4F');
+        teardrop.setAttribute('stroke', '#FFFEF9');
+        teardrop.setAttribute('stroke-width', '4');
+        teardrop.setAttribute('transform', `translate(0, -${h})`);
+        group.appendChild(teardrop);
 
-        // Inner dot
-        const dot = document.createElementNS(this.SVG_NS, 'circle');
-        dot.setAttribute('cx', 0);
-        dot.setAttribute('cy', 0);
-        dot.setAttribute('r', 12);
-        dot.setAttribute('fill', '#FFFFFF');
-        group.appendChild(dot);
+        // Country initial letter inside pin
+        const initial = document.createElementNS(this.SVG_NS, 'text');
+        initial.setAttribute('x', 0);
+        initial.setAttribute('y', -h + r * 0.15);
+        initial.setAttribute('text-anchor', 'middle');
+        initial.setAttribute('dominant-baseline', 'central');
+        initial.setAttribute('fill', '#FFFEF9');
+        initial.setAttribute('font-size', '32');
+        initial.setAttribute('font-weight', '700');
+        initial.setAttribute('font-family', "'Freight Display Pro', Georgia, serif");
+        initial.textContent = data.code.toUpperCase().slice(0, 2);
+        group.appendChild(initial);
 
-        // Country label
+        // Country label below
         const label = document.createElementNS(this.SVG_NS, 'text');
         label.setAttribute('x', 0);
-        label.setAttribute('y', this.pinConfig.labelOffset);
+        label.setAttribute('y', 30);
         label.setAttribute('text-anchor', 'middle');
-        label.setAttribute('fill', '#2D3436');
-        label.setAttribute('font-size', '48');
+        label.setAttribute('fill', '#3D2C2E');
+        label.setAttribute('font-size', '44');
         label.setAttribute('font-weight', '600');
-        label.setAttribute('font-family', 'Segoe UI, sans-serif');
+        label.setAttribute('font-family', "'Freight Display Pro', Georgia, serif");
         label.textContent = data.country;
         group.appendChild(label);
 
-        // Member count badge (if more than 1)
+        // Member count badge
         if (data.members.length > 1) {
             const badge = document.createElementNS(this.SVG_NS, 'g');
-            badge.setAttribute('transform', `translate(${this.pinConfig.radius * 0.8}, -${this.pinConfig.radius * 0.8})`);
+            badge.setAttribute('transform', `translate(${r * 0.7}, -${h + r * 0.5})`);
 
             const badgeCircle = document.createElementNS(this.SVG_NS, 'circle');
-            badgeCircle.setAttribute('r', 28);
-            badgeCircle.setAttribute('fill', '#FF6B6B');
-            badgeCircle.setAttribute('stroke', '#FFFFFF');
-            badgeCircle.setAttribute('stroke-width', '4');
+            badgeCircle.setAttribute('r', 24);
+            badgeCircle.setAttribute('fill', '#BC6C25');
+            badgeCircle.setAttribute('stroke', '#FFFEF9');
+            badgeCircle.setAttribute('stroke-width', '3');
             badge.appendChild(badgeCircle);
 
             const badgeText = document.createElementNS(this.SVG_NS, 'text');
             badgeText.setAttribute('text-anchor', 'middle');
             badgeText.setAttribute('dominant-baseline', 'central');
-            badgeText.setAttribute('fill', '#FFFFFF');
-            badgeText.setAttribute('font-size', '36');
-            badgeText.setAttribute('font-weight', '600');
+            badgeText.setAttribute('fill', '#FFFEF9');
+            badgeText.setAttribute('font-size', '28');
+            badgeText.setAttribute('font-weight', '700');
             badgeText.textContent = data.members.length;
             badge.appendChild(badgeText);
 
             group.appendChild(badge);
         }
 
-        // Nest animated group inside position group
         positionGroup.appendChild(group);
         return positionGroup;
+    },
+
+    /**
+     * Single-country fallback: large decorative pin with names radiating outward
+     * @param {Object} countryData - The single country data
+     * @param {Object} countriesData - Countries coordinate data
+     */
+    createSingleCountryDisplay(countryData, countriesData) {
+        const countries = countriesData.countries || {};
+        const coords = countries[countryData.code];
+        if (!coords) return;
+
+        const x = (coords.x / 100) * this.mapWidth;
+        const y = (coords.y / 100) * this.mapHeight;
+
+        const positionGroup = document.createElementNS(this.SVG_NS, 'g');
+        positionGroup.setAttribute('transform', `translate(${x}, ${y})`);
+
+        const group = document.createElementNS(this.SVG_NS, 'g');
+        group.setAttribute('class', 'map-pin');
+        group.setAttribute('data-country', countryData.code);
+        group.setAttribute('data-delay', 0);
+
+        // Large pulse
+        const pulse = document.createElementNS(this.SVG_NS, 'circle');
+        pulse.setAttribute('class', 'map-pin-pulse');
+        pulse.setAttribute('cx', 0);
+        pulse.setAttribute('cy', 0);
+        pulse.setAttribute('r', 120);
+        pulse.setAttribute('fill', '#2D6A4F');
+        pulse.setAttribute('opacity', '0.2');
+        group.appendChild(pulse);
+
+        // Large teardrop
+        const r = 55;
+        const h = 75;
+        const teardrop = document.createElementNS(this.SVG_NS, 'path');
+        teardrop.setAttribute('d', `M0,${h} C-${r*0.8},${h*0.5} -${r},-${r*0.3} 0,-${r} C${r},-${r*0.3} ${r*0.8},${h*0.5} 0,${h} Z`);
+        teardrop.setAttribute('fill', '#2D6A4F');
+        teardrop.setAttribute('stroke', '#FFFEF9');
+        teardrop.setAttribute('stroke-width', '5');
+        teardrop.setAttribute('transform', `translate(0, -${h})`);
+        group.appendChild(teardrop);
+
+        // Country flag letters inside
+        const initial = document.createElementNS(this.SVG_NS, 'text');
+        initial.setAttribute('x', 0);
+        initial.setAttribute('y', -h + r * 0.15);
+        initial.setAttribute('text-anchor', 'middle');
+        initial.setAttribute('dominant-baseline', 'central');
+        initial.setAttribute('fill', '#FFFEF9');
+        initial.setAttribute('font-size', '42');
+        initial.setAttribute('font-weight', '700');
+        initial.setAttribute('font-family', "'Freight Display Pro', Georgia, serif");
+        initial.textContent = countryData.code.toUpperCase();
+        group.appendChild(initial);
+
+        // Radiate member names outward in a circle
+        const members = countryData.members;
+        const nameRadius = 200;
+        const startAngle = -90; // Start from top
+        const angleStep = 360 / members.length;
+
+        members.forEach((member, i) => {
+            const angle = (startAngle + i * angleStep) * Math.PI / 180;
+            const nx = Math.cos(angle) * nameRadius;
+            const ny = Math.sin(angle) * nameRadius;
+
+            // Connecting line from pin to name
+            const line = document.createElementNS(this.SVG_NS, 'line');
+            line.setAttribute('x1', 0);
+            line.setAttribute('y1', 0);
+            line.setAttribute('x2', nx * 0.6);
+            line.setAttribute('y2', ny * 0.6);
+            line.setAttribute('stroke', '#2D6A4F');
+            line.setAttribute('stroke-width', '1');
+            line.setAttribute('stroke-opacity', '0.3');
+            line.setAttribute('stroke-dasharray', '4 3');
+            group.appendChild(line);
+
+            // Name label
+            const nameText = document.createElementNS(this.SVG_NS, 'text');
+            nameText.setAttribute('x', nx);
+            nameText.setAttribute('y', ny);
+            nameText.setAttribute('text-anchor', 'middle');
+            nameText.setAttribute('dominant-baseline', 'central');
+            nameText.setAttribute('fill', '#3D2C2E');
+            nameText.setAttribute('font-size', '24');
+            nameText.setAttribute('font-weight', '500');
+            nameText.setAttribute('font-family', "'Freight Display Pro', Georgia, serif");
+            nameText.textContent = member.name;
+            group.appendChild(nameText);
+
+            // Relationship sub-label
+            const relText = document.createElementNS(this.SVG_NS, 'text');
+            relText.setAttribute('x', nx);
+            relText.setAttribute('y', ny + 22);
+            relText.setAttribute('text-anchor', 'middle');
+            relText.setAttribute('fill', '#6B5E62');
+            relText.setAttribute('font-size', '16');
+            relText.setAttribute('font-style', 'italic');
+            relText.setAttribute('font-family', "'Freight Display Pro', Georgia, serif");
+            relText.textContent = member.relationship;
+            group.appendChild(relText);
+        });
+
+        // Caption below the pin
+        const caption = document.createElementNS(this.SVG_NS, 'text');
+        caption.setAttribute('x', 0);
+        caption.setAttribute('y', 60);
+        caption.setAttribute('text-anchor', 'middle');
+        caption.setAttribute('fill', '#3D2C2E');
+        caption.setAttribute('font-size', '36');
+        caption.setAttribute('font-weight', '600');
+        caption.setAttribute('font-family', "'Freight Display Pro', Georgia, serif");
+        caption.textContent = `All ${members.length} family members`;
+        group.appendChild(caption);
+
+        const caption2 = document.createElementNS(this.SVG_NS, 'text');
+        caption2.setAttribute('x', 0);
+        caption2.setAttribute('y', 95);
+        caption2.setAttribute('text-anchor', 'middle');
+        caption2.setAttribute('fill', '#6B5E62');
+        caption2.setAttribute('font-size', '28');
+        caption2.setAttribute('font-style', 'italic');
+        caption2.setAttribute('font-family', "'Freight Display Pro', Georgia, serif");
+        caption2.textContent = `Born in the ${countryData.country}`;
+        group.appendChild(caption2);
+
+        positionGroup.appendChild(group);
+        this.pinsGroup.appendChild(positionGroup);
     },
 
     /**

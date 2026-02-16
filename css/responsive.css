@@ -13,8 +13,16 @@
         --font-size-4xl: 5rem;
     }
 
+    .title-content .family-name {
+        font-size: 10rem;
+    }
+
     .tree-card-name {
         font-size: 16px;
+    }
+
+    .title-photo-tree {
+        height: 92vh;
     }
 
     .focus-person-card {
@@ -46,6 +54,10 @@
         --font-size-4xl: 3.5rem;
     }
 
+    .title-content .family-name {
+        font-size: 6rem;
+    }
+
     .focus-cards {
         gap: var(--space-xl);
     }
@@ -68,6 +80,15 @@
 
     .slide {
         padding: var(--space-lg);
+    }
+
+    .title-content .family-name {
+        font-size: 5rem;
+    }
+
+    /* Title photo tree */
+    .title-photo-tree {
+        height: 85vh;
     }
 
     /* Adjust tree for smaller screens */
@@ -93,17 +114,6 @@
 
     .focus-person-name {
         font-size: var(--font-size-lg);
-    }
-
-    /* 4-person cards */
-    .focus-cards-four .focus-person-card {
-        min-width: 180px;
-        max-width: 200px;
-    }
-
-    .focus-cards-four .focus-person-photo {
-        width: 70px;
-        height: 70px;
     }
 
     /* Controls */
@@ -162,18 +172,6 @@
         max-width: 300px;
     }
 
-    .focus-cards-four {
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-
-    .focus-cards-four .focus-person-card {
-        width: calc(50% - var(--space-md));
-        min-width: 140px;
-        max-width: 180px;
-    }
-
     /* Map */
     .map-container {
         padding: var(--space-sm);
@@ -212,6 +210,39 @@
         margin-left: auto;
     }
 
+    .title-content .family-name {
+        font-size: 4rem;
+    }
+
+    /* Title photo tree scales down on tablet */
+    /* Title slide stacks on smaller screens */
+    .slide-title {
+        flex-direction: column;
+        gap: var(--space-lg);
+        padding: var(--space-lg);
+    }
+
+    .title-content {
+        text-align: center;
+        max-width: none;
+    }
+
+    .title-photo-tree {
+        flex: 1 1 auto;
+        width: 100%;
+        height: auto;
+    }
+
+    /* Horizontal cards narrow on tablet */
+    .focus-person-card-horizontal {
+        width: 360px;
+    }
+
+    .focus-person-card-horizontal .focus-person-photo {
+        width: 110px;
+        height: 110px;
+    }
+
     /* Keyboard hints - hide on touch devices */
     .keyboard-hint {
         display: none;
@@ -245,7 +276,7 @@
 
     /* Title slide */
     .title-content .family-name {
-        font-size: var(--font-size-3xl);
+        font-size: 3rem;
     }
 
     .title-subtitle {
@@ -256,35 +287,74 @@
         font-size: var(--font-size-sm);
     }
 
+    .title-the {
+        font-size: var(--font-size-sm);
+    }
+
+    /* Title photo tree scales down on mobile */
+    .slide-title {
+        flex-direction: column;
+        gap: var(--space-md);
+        padding: var(--space-sm);
+    }
+
+    .title-content {
+        text-align: center;
+        max-width: none;
+    }
+
+    .title-photo-tree {
+        flex: 1 1 auto;
+        width: 100%;
+        height: auto;
+    }
+
+    /* Horizontal cards stack on mobile */
+    .focus-person-card-horizontal {
+        flex-direction: column;
+        width: 100%;
+        max-width: 280px;
+        text-align: center;
+    }
+
+    .focus-person-card-horizontal .focus-person-info {
+        text-align: center;
+    }
+
+    /* Closing slide */
+    .closing-title {
+        font-size: var(--font-size-2xl);
+    }
+
+    .closing-subtitle {
+        font-size: var(--font-size-base);
+    }
+
     /* Tree - simplified view */
     .tree-container {
         overflow: auto;
     }
 
     /* Focus cards - single column */
-    .focus-cards,
-    .focus-cards-four {
+    .focus-cards {
         flex-direction: column;
         align-items: center;
         gap: var(--space-sm);
     }
 
-    .focus-person-card,
-    .focus-cards-four .focus-person-card {
+    .focus-person-card {
         width: 100%;
         max-width: 280px;
         padding: var(--space-md);
     }
 
-    .focus-person-photo,
-    .focus-cards-four .focus-person-photo {
+    .focus-person-photo {
         width: 80px;
         height: 80px;
         margin-bottom: var(--space-md);
     }
 
-    .focus-person-name,
-    .focus-cards-four .focus-person-name {
+    .focus-person-name {
         font-size: var(--font-size-base);
     }
 
@@ -343,7 +413,8 @@
     }
 
     /* Remove hover effects that don't work well on touch */
-    .focus-person-card:hover {
+    .focus-person-card:hover,
+    .focus-person-card-horizontal:hover {
         transform: none;
         box-shadow: var(--shadow-card);
     }
@@ -367,7 +438,7 @@
     }
 
     .tree-card-bg {
-        filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.1));
+        filter: drop-shadow(0 2px 6px rgba(61, 44, 46, 0.1));
     }
 }
 
@@ -430,8 +501,9 @@
     /* Backdrop blur fallback for older iOS */
     @supports not (backdrop-filter: blur(10px)) {
         .focus-person-card,
+        .focus-person-card-horizontal,
         .controls {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 254, 249, 0.95);
         }
     }
 }

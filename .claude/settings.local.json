@@ -1,10 +1,14 @@
 {
-  "disabledMcpjsonServers": [
-    "obsidian"
-  ],
   "permissions": {
     "allow": [
       "Bash(python3:*)"
     ]
-  }
+  },
+  "disabledMcpjsonServers": [
+    "obsidian"
+  ],
+  "enabledMcpjsonServers": [
+    "obsidian"
+  ],
+  "enableAllProjectMcpServers": true
 }

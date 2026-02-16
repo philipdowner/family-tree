@@ -31,17 +31,18 @@ const Slideshow = {
         closingSlide: 5000
     },
 
-    // Slide definitions with their timing keys
+    // Slide definitions with their timing keys and transition types
+    // Transition types: 'fade-scale', 'zoom-in', 'slide-left', 'fade-up', 'warm-fade'
     slides: [
-        { id: 'slide-title', timing: 'titleSlide', onEnter: null },
-        { id: 'slide-tree', timing: 'treeSlide', onEnter: 'onTreeSlide' },
-        { id: 'slide-parents', timing: 'parentsSlide', onEnter: 'onParentsSlide' },
-        { id: 'slide-maternal-grandparents', timing: 'grandparentsSlide', onEnter: 'onMaternalGrandparentsSlide' },
-        { id: 'slide-paternal-grandparents', timing: 'grandparentsSlide', onEnter: 'onPaternalGrandparentsSlide' },
-        { id: 'slide-maternal-great', timing: 'greatGrandparentsSlide', onEnter: 'onMaternalGreatSlide' },
-        { id: 'slide-paternal-great', timing: 'greatGrandparentsSlide', onEnter: 'onPaternalGreatSlide' },
-        { id: 'slide-map', timing: 'mapSlide', onEnter: 'onMapSlide' },
-        { id: 'slide-closing', timing: 'closingSlide', onEnter: null }
+        { id: 'slide-title', timing: 'titleSlide', onEnter: null, transition: 'fade-scale' },
+        { id: 'slide-tree', timing: 'treeSlide', onEnter: 'onTreeSlide', transition: 'zoom-in' },
+        { id: 'slide-parents', timing: 'parentsSlide', onEnter: 'onParentsSlide', transition: 'slide-left' },
+        { id: 'slide-maternal-grandparents', timing: 'grandparentsSlide', onEnter: 'onMaternalGrandparentsSlide', transition: 'slide-left' },
+        { id: 'slide-paternal-grandparents', timing: 'grandparentsSlide', onEnter: 'onPaternalGrandparentsSlide', transition: 'slide-left' },
+        { id: 'slide-maternal-great', timing: 'greatGrandparentsSlide', onEnter: 'onMaternalGreatSlide', transition: 'slide-left' },
+        { id: 'slide-paternal-great', timing: 'greatGrandparentsSlide', onEnter: 'onPaternalGreatSlide', transition: 'fade-up' },
+        { id: 'slide-map', timing: 'mapSlide', onEnter: 'onMapSlide', transition: 'warm-fade' },
+        { id: 'slide-closing', timing: 'closingSlide', onEnter: 'onClosingSlide', transition: 'fade-scale' }
     ],
 
     // Callbacks for slide-specific actions
@@ -205,6 +206,9 @@ const Slideshow = {
         }
     },
 
+    // Transition class names
+    transitionClasses: ['trans-fade-scale', 'trans-zoom-in', 'trans-slide-left', 'trans-slide-right', 'trans-fade-up', 'trans-warm-fade'],
+
     /**
      * Go to a specific slide
      * @param {number} index - Slide index
@@ -213,14 +217,48 @@ const Slideshow = {
         // Validate index
         if (index < 0 || index >= this.totalSlides) return;
 
+        // Dismiss any zoomed tree card when leaving the tree slide
+        if (this.currentSlide !== index && TreeRenderer._zoomedCard) {
+            TreeRenderer.dismissZoom();
+        }
+
         // Stop current timer
         this.stopTimer();
 
-        // Update slide visibility
         const allSlides = document.querySelectorAll('.slide');
+        const prevIndex = this.currentSlide;
+        const goingForward = index >= prevIndex;
+        const slideDef = this.slides[index];
+        const transType = slideDef.transition || 'fade-scale';
+
+        // Remove all transition classes from all slides
+        allSlides.forEach(slide => {
+            this.transitionClasses.forEach(c => slide.classList.remove(c));
+            slide.classList.remove('trans-exit');
+        });
+
+        // Apply directional transition
         allSlides.forEach((slide, i) => {
             if (i === index) {
-                slide.classList.add('active');
+                // Determine enter class
+                let enterClass = `trans-${transType}`;
+                // If going backwards with slide-left, reverse to slide-right
+                if (!goingForward && transType === 'slide-left') {
+                    enterClass = 'trans-slide-right';
+                }
+                slide.classList.add('active', enterClass);
+
+                // Clean up transition class after animation
+                slide.addEventListener('animationend', () => {
+                    slide.classList.remove(enterClass);
+                }, { once: true });
+
+                // Fallback cleanup
+                setTimeout(() => {
+                    slide.classList.remove(enterClass);
+                }, 800);
+            } else if (i === prevIndex && i !== index) {
+                slide.classList.remove('active');
             } else {
                 slide.classList.remove('active');
             }
@@ -238,7 +276,6 @@ const Slideshow = {
         this.resetProgress();
 
         // Call slide-specific handler
-        const slideDef = this.slides[index];
         if (slideDef && slideDef.onEnter && this.callbacks[slideDef.onEnter]) {
             this.callbacks[slideDef.onEnter]();
         }

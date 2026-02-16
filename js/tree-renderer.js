@@ -7,20 +7,20 @@ const TreeRenderer = {
     // SVG namespace
     SVG_NS: 'http://www.w3.org/2000/svg',
 
-    // Tree layout configuration
+    // Tree layout configuration — horizontal cards for readability
     config: {
         viewBox: { width: 1920, height: 1080 },
-        padding: { top: 40, bottom: 100, left: 60, right: 60 },
+        padding: { top: 40, bottom: 100, left: 80, right: 80 },
 
-        // Card sizes per generation (larger for better readability)
-        cardSizes: {
-            0: { width: 200, height: 220, photoSize: 100 },  // Child
-            1: { width: 180, height: 200, photoSize: 90 },   // Parents
-            2: { width: 160, height: 180, photoSize: 75 },   // Grandparents
-            3: { width: 140, height: 155, photoSize: 60 }    // Great-grandparents
-        },
+        // Uniform card size for all generations
+        card: { width: 160, height: 64, photoSize: 72 },
 
-        // Vertical spacing between generations
+        // Photo overflows the card on the left
+        photoOverflow: 14,
+
+        // Uniform text sizes
+        text: { name: 13, years: 11 },
+
         generationGap: 50
     },
 
@@ -59,12 +59,11 @@ const TreeRenderer = {
         const usableHeight = vb.height - pad.top - pad.bottom;
 
         // Calculate Y positions for each generation (from bottom to top)
-        // Spread out more to accommodate larger cards
         const genHeights = [
-            pad.top + usableHeight * 0.88,  // Gen 0: Child (bottom)
-            pad.top + usableHeight * 0.64,  // Gen 1: Parents
+            pad.top + usableHeight * 0.85,  // Gen 0: Child (bottom)
+            pad.top + usableHeight * 0.62,  // Gen 1: Parents
             pad.top + usableHeight * 0.38,  // Gen 2: Grandparents
-            pad.top + usableHeight * 0.14   // Gen 3: Great-grandparents (top)
+            pad.top + usableHeight * 0.15   // Gen 3: Great-grandparents (top)
         ];
 
         const centerX = vb.width / 2;
@@ -78,8 +77,8 @@ const TreeRenderer = {
             side: 'center'
         };
 
-        // Parents - spread wider to prevent great-grandparent overlap
-        const parentSpread = usableWidth * 0.32;
+        // Parents - spread wide enough to give great-grandparents room
+        const parentSpread = usableWidth * 0.26;
         positions.mother = {
             x: centerX - parentSpread,
             y: genHeights[1],
@@ -93,8 +92,8 @@ const TreeRenderer = {
             side: 'paternal'
         };
 
-        // Grandparents - reduced spread to keep tree balanced
-        const gpSpread = usableWidth * 0.14;
+        // Grandparents
+        const gpSpread = usableWidth * 0.115;
         positions.mothersMother = {
             x: centerX - parentSpread - gpSpread,
             y: genHeights[2],
@@ -120,8 +119,8 @@ const TreeRenderer = {
             side: 'paternal'
         };
 
-        // Great-grandparents - tighter spread to prevent center overlap
-        const ggpSpread = usableWidth * 0.06;
+        // Great-grandparents
+        const ggpSpread = usableWidth * 0.063;
 
         // Maternal side (left half)
         positions.mothersMothersMother = {
@@ -204,8 +203,54 @@ const TreeRenderer = {
         // Draw branches first (behind cards)
         this.drawBranches(positions, familyData);
 
+        // Draw generation labels on left side
+        this.drawGenerationLabels(positions);
+
         // Draw person cards
         this.drawCards(positions, familyData);
+    },
+
+    /**
+     * Draw generation labels on the left margin
+     * @param {Object} positions - Position map
+     */
+    drawGenerationLabels(positions) {
+        const cardH = this.config.card.height;
+
+        // Labels placed in the gap between generations
+        const pairs = [
+            { text: 'Great-Grandparents', upperKey: 'mothersMothersMother', lowerKey: 'mothersMother' },
+            { text: 'Grandparents', upperKey: 'mothersMother', lowerKey: 'mother' },
+            { text: 'Parents', upperKey: 'mother', lowerKey: 'child' },
+            { text: 'Me', refKey: 'child' }
+        ];
+
+        pairs.forEach(lbl => {
+            let labelY;
+
+            if (lbl.refKey) {
+                // "Me" — place just above the child card
+                const pos = positions[lbl.refKey];
+                if (!pos) return;
+                labelY = pos.y - cardH / 2 - 12;
+            } else {
+                // Place in the vertical gap between two generations
+                const upper = positions[lbl.upperKey];
+                const lower = positions[lbl.lowerKey];
+                if (!upper || !lower) return;
+                const gapTop = upper.y + cardH / 2;
+                const gapBottom = lower.y - cardH / 2;
+                labelY = (gapTop + gapBottom) / 2 + 5;
+            }
+
+            const label = this.createSVGElement('text', {
+                class: 'generation-label',
+                x: 30,
+                y: labelY
+            });
+            label.textContent = lbl.text;
+            this.branchesGroup.appendChild(label);
+        });
     },
 
     /**
@@ -242,15 +287,11 @@ const TreeRenderer = {
 
             if (!fromPos || !toPos) return;
 
-            // Get card heights for proper connection points
-            const fromGen = fromPos.generation;
-            const toGen = toPos.generation;
-            const fromCardHeight = this.config.cardSizes[fromGen].height;
-            const toCardHeight = this.config.cardSizes[toGen].height;
+            const cardH = this.config.card.height;
 
             // Connect from top of lower card to bottom of upper card
-            const startY = fromPos.y - fromCardHeight / 2;
-            const endY = toPos.y + toCardHeight / 2;
+            const startY = fromPos.y - cardH / 2;
+            const endY = toPos.y + cardH / 2;
 
             // Create curved path using bezier curve
             const midY = (startY + endY) / 2;
@@ -310,108 +351,114 @@ const TreeRenderer = {
      */
     createPersonCard(person, pos, role, index) {
         const gen = pos.generation;
-        const size = this.config.cardSizes[gen];
+        const card = this.config.card;
+        const txt = this.config.text;
+        const overflow = this.config.photoOverflow;
         const sideClass = pos.side === 'maternal' ? 'maternal' :
                          pos.side === 'paternal' ? 'paternal' : 'child';
 
-        // Create group for the card
+        // Card origin (top-left of the rect)
+        const cardX = pos.x - card.width / 2;
+        const cardY = pos.y - card.height / 2;
+
         const group = this.createSVGElement('g', {
             class: `tree-card gen-${gen} ${sideClass}`,
             'data-role': role,
             'data-delay': index * 150,
-            transform: `translate(${pos.x - size.width / 2}, ${pos.y - size.height / 2})`
+            transform: `translate(${cardX}, ${cardY})`
         });
 
         // Background rectangle
-        const bg = this.createSVGElement('rect', {
+        group.appendChild(this.createSVGElement('rect', {
             class: 'tree-card-bg',
-            x: 0,
-            y: 0,
-            width: size.width,
-            height: size.height,
-            rx: 12,
-            ry: 12
-        });
-        group.appendChild(bg);
+            x: 0, y: 0,
+            width: card.width,
+            height: card.height,
+            rx: 8, ry: 8
+        }));
 
-        // Photo or placeholder
-        const photoY = 15;
-        const photoX = size.width / 2;
-        const photoR = size.photoSize / 2;
+        // --- Photo: overflows top-left of the card ---
+        const photoR = card.photoSize / 2;
+        // Center the photo vertically on the card, shifted left so it overlaps the edge
+        const photoCX = photoR - overflow;
+        const photoCY = card.height / 2;
 
-        // Create clip path for circular photo
         const clipId = `photo-clip-${role}`;
         const defs = this.createSVGElement('defs');
         const clipPath = this.createSVGElement('clipPath', { id: clipId });
-        const clipCircle = this.createSVGElement('circle', {
-            cx: photoX,
-            cy: photoY + photoR,
-            r: photoR
-        });
-        clipPath.appendChild(clipCircle);
+        clipPath.appendChild(this.createSVGElement('circle', {
+            cx: photoCX, cy: photoCY, r: photoR
+        }));
         defs.appendChild(clipPath);
         group.appendChild(defs);
 
-        // Photo placeholder circle (always visible as background)
-        const photoPlaceholder = this.createSVGElement('circle', {
+        // Placeholder
+        group.appendChild(this.createSVGElement('circle', {
             class: 'tree-card-photo-placeholder',
-            cx: photoX,
-            cy: photoY + photoR,
-            r: photoR
-        });
-        group.appendChild(photoPlaceholder);
+            cx: photoCX, cy: photoCY, r: photoR
+        }));
 
-        // Actual photo image (if exists)
+        // Photo image
         if (person.photo) {
-            const photoImg = this.createSVGElement('image', {
+            group.appendChild(this.createSVGElement('image', {
                 href: person.photo,
-                x: photoX - photoR,
-                y: photoY,
-                width: size.photoSize,
-                height: size.photoSize,
+                x: photoCX - photoR,
+                y: photoCY - photoR,
+                width: card.photoSize,
+                height: card.photoSize,
                 'clip-path': `url(#${clipId})`,
                 preserveAspectRatio: 'xMidYMid slice'
-            });
-            group.appendChild(photoImg);
+            }));
         }
 
-        // Photo border
-        const photoBorder = this.createSVGElement('circle', {
+        // Photo border ring
+        group.appendChild(this.createSVGElement('circle', {
             class: 'tree-card-photo-border',
-            cx: photoX,
-            cy: photoY + photoR,
-            r: photoR
+            cx: photoCX, cy: photoCY, r: photoR
+        }));
+
+        // --- Text: right of photo, inside the card ---
+        const textX = photoR - overflow + photoR + 8;
+
+        // Build year string
+        const birthYear = person.birthDate ? person.birthDate.split('-')[0] : '';
+        const deathYear = person.deathDate ? person.deathDate.split('-')[0] : '';
+        let yearStr = '';
+        if (birthYear && deathYear) yearStr = `${birthYear}–${deathYear}`;
+        else if (birthYear) yearStr = `b. ${birthYear}`;
+
+        // Vertically center the 3-line text block (firstName, lastName, years)
+        const lineGap = 3;
+        const lines = 2 + (yearStr ? 1 : 0);
+        const blockH = txt.name * 2 + (yearStr ? txt.years : 0) + lineGap * (lines - 1);
+        let textY = (card.height - blockH) / 2 + txt.name;
+
+        // First name
+        const firstName = this.createSVGElement('text', {
+            class: 'tree-card-name',
+            x: textX, y: textY
         });
-        group.appendChild(photoBorder);
+        firstName.textContent = person.firstName;
+        group.appendChild(firstName);
 
-        // Name text
-        const nameY = photoY + size.photoSize + 20;
-        const nameClass = gen >= 2 ? 'tree-card-name small' : 'tree-card-name';
-        const name = this.createSVGElement('text', {
-            class: nameClass,
-            x: size.width / 2,
-            y: nameY
+        // Last name
+        textY += txt.name + lineGap;
+        const lastName = this.createSVGElement('text', {
+            class: 'tree-card-name',
+            x: textX, y: textY
         });
+        lastName.textContent = person.lastName;
+        group.appendChild(lastName);
 
-        // Show first name for great-grandparents (space limited)
-        const displayName = gen >= 3 ?
-            person.firstName :
-            `${person.firstName} ${person.lastName}`;
-
-        name.textContent = displayName;
-        group.appendChild(name);
-
-        // Dates
-        const dateRange = DataLoader.getDateRange(person);
-        if (dateRange && gen < 3) {
-            const datesClass = gen >= 2 ? 'tree-card-dates small' : 'tree-card-dates';
-            const dates = this.createSVGElement('text', {
-                class: datesClass,
-                x: size.width / 2,
-                y: nameY + 16
+        // Years
+        if (yearStr) {
+            textY += txt.years + lineGap;
+            const years = this.createSVGElement('text', {
+                class: 'tree-card-years',
+                x: textX, y: textY
             });
-            dates.textContent = dateRange;
-            group.appendChild(dates);
+            years.textContent = yearStr;
+            group.appendChild(years);
         }
 
         return group;
@@ -459,39 +506,243 @@ const TreeRenderer = {
      * Create focus cards for detail slides
      * @param {Array} people - Array of person data with side info
      * @param {HTMLElement} container - Container to render into
+     * @param {Object} options - Layout options
      */
-    createFocusCards(people, container) {
+    createFocusCards(people, container, options = {}) {
         container.innerHTML = '';
 
-        people.forEach(person => {
+        const layout = options.layout || 'portrait';
+
+        people.forEach((person, index) => {
             if (!person) return;
 
             const card = document.createElement('div');
-            card.className = `focus-person-card ${person.side || ''}`;
+            const layoutClass = layout === 'horizontal' ? 'focus-person-card-horizontal' : 'focus-person-card';
+            card.className = `${layoutClass} ${person.side || ''}`;
 
             // Get initials for placeholder (only used when no photo)
             const initials = (person.firstName?.[0] || '') + (person.lastName?.[0] || '');
             const hasPhoto = person.photo ? true : false;
 
-            card.innerHTML = `
+            const photoHTML = `
                 <div class="focus-person-photo ${hasPhoto ? '' : 'placeholder'}"
                      ${hasPhoto ? '' : `data-initials="${initials}"`}
                      ${hasPhoto ? `style="background-image: url('${person.photo}'); background-size: cover; background-position: center;"` : ''}>
                 </div>
-                <h3 class="focus-person-name">${person.firstName} ${person.lastName}</h3>
-                <p class="focus-person-dates">${DataLoader.getDateRange(person) || ''}</p>
-                ${person.countryOfOrigin ? `
-                    <div class="focus-person-origin">
-                        <img class="focus-person-flag"
-                             src="images/flags/${person.countryFlag || 'un'}.svg"
-                             alt="${person.countryOfOrigin}"
-                             onerror="this.style.display='none'">
-                        <span>${person.countryOfOrigin}</span>
-                    </div>
-                ` : ''}
             `;
 
+            const infoHTML = `
+                <div class="focus-person-info">
+                    <h3 class="focus-person-name">${person.firstName} ${person.lastName}</h3>
+                    <p class="focus-person-dates">${DataLoader.getDateRange(person) || ''}</p>
+                    ${person.funFact ? `<p class="focus-person-funfact"><em>${person.funFact}</em></p>` : ''}
+                    ${person.countryOfOrigin ? `
+                        <div class="focus-person-origin">
+                            <img class="focus-person-flag"
+                                 src="images/flags/${person.countryFlag || 'un'}.svg"
+                                 alt="${person.countryOfOrigin}"
+                                 onerror="this.style.display='none'">
+                            <span>${person.countryOfOrigin}</span>
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+
+            if (layout === 'horizontal') {
+                card.innerHTML = photoHTML + infoHTML;
+            } else {
+                card.innerHTML = photoHTML + infoHTML;
+            }
+
             container.appendChild(card);
+        });
+    },
+
+    // ---------------------------------------------------------------
+    //  Click-to-zoom on tree cards
+    // ---------------------------------------------------------------
+
+    /** Currently zoomed card element (or null) */
+    _zoomedCard: null,
+
+    /** Backdrop overlay behind the zoomed card */
+    _backdrop: null,
+
+    /**
+     * Set up click-to-zoom handlers on the tree slide.
+     * Call once after render().
+     */
+    initCardZoom() {
+        // Create a semi-transparent backdrop (inserted before cards group)
+        this._backdrop = this.createSVGElement('rect', {
+            class: 'tree-zoom-backdrop',
+            x: 0, y: 0,
+            width: this.config.viewBox.width,
+            height: this.config.viewBox.height
+        });
+        this._backdrop.style.display = 'none';
+        this.svg.insertBefore(this._backdrop, this.cardsGroup);
+
+        // Click on backdrop → dismiss zoom
+        this._backdrop.addEventListener('click', (e) => {
+            e.stopPropagation();
+            this.dismissZoom();
+        });
+
+        // Click on each card → zoom it
+        const cards = this.cardsGroup.querySelectorAll('.tree-card');
+        cards.forEach(card => {
+            card.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.zoomCard(card);
+            });
+        });
+
+        // Click anywhere else on the SVG → dismiss
+        this.svg.addEventListener('click', () => {
+            this.dismissZoom();
+        });
+    },
+
+    /**
+     * Zoom into a specific card.
+     * Animates the SVG transform attribute directly via anime.js
+     * so that SVG viewBox coordinates are respected.
+     * @param {SVGElement} card - The tree-card <g> element
+     */
+    zoomCard(card) {
+        // If clicking the already-zoomed card, dismiss it
+        if (this._zoomedCard === card) {
+            this.dismissZoom();
+            return;
+        }
+
+        // Dismiss any currently zoomed card first (instant)
+        if (this._zoomedCard) {
+            this._resetCard(this._zoomedCard, false);
+        }
+
+        this._zoomedCard = card;
+        const cardW = this.config.card.width;
+        const cardH = this.config.card.height;
+        const scale = 2.5;
+
+        // Save original translate
+        const origTransform = card.getAttribute('transform');
+        card.dataset.origTransform = origTransform;
+
+        const match = origTransform.match(/translate\(\s*([\d.-]+)\s*,\s*([\d.-]+)\s*\)/);
+        if (!match) return;
+
+        const origTx = parseFloat(match[1]);
+        const origTy = parseFloat(match[2]);
+
+        // Card center in SVG coords
+        const cx = origTx + cardW / 2;
+        const cy = origTy + cardH / 2;
+
+        // Target: card center at viewBox center
+        const vbCx = this.config.viewBox.width / 2;
+        const vbCy = this.config.viewBox.height / 2;
+
+        // The zoomed transform places the scale origin at the card center:
+        //   translate(vbCx, vbCy) scale(s) translate(-cardW/2, -cardH/2)
+        const targetTx = vbCx;
+        const targetTy = vbCy;
+
+        // Show backdrop & bring card to front
+        this._backdrop.style.display = '';
+        this.cardsGroup.appendChild(card);
+        card.classList.add('zoomed');
+
+        // Animate with anime.js
+        const anim = { tx: origTx, ty: origTy, s: 1 };
+        anime({
+            targets: anim,
+            tx: targetTx,
+            ty: targetTy,
+            s: scale,
+            duration: 400,
+            easing: 'easeOutCubic',
+            update: () => {
+                card.setAttribute('transform',
+                    `translate(${anim.tx}, ${anim.ty}) scale(${anim.s}) translate(${-cardW / 2}, ${-cardH / 2})`
+                );
+            }
+        });
+    },
+
+    /**
+     * Dismiss the currently zoomed card
+     */
+    dismissZoom() {
+        if (!this._zoomedCard) return;
+        this._resetCard(this._zoomedCard, true);
+        this._zoomedCard = null;
+    },
+
+    /**
+     * Reset a card to its original position
+     * @param {SVGElement} card
+     * @param {boolean} animate - Whether to animate the return
+     */
+    _resetCard(card, animate) {
+        const orig = card.dataset.origTransform;
+        if (!orig) return;
+
+        const match = orig.match(/translate\(\s*([\d.-]+)\s*,\s*([\d.-]+)\s*\)/);
+        if (!match) {
+            card.setAttribute('transform', orig);
+            card.classList.remove('zoomed');
+            this._backdrop.style.display = 'none';
+            return;
+        }
+
+        const targetTx = parseFloat(match[1]);
+        const targetTy = parseFloat(match[2]);
+
+        if (!animate) {
+            card.setAttribute('transform', orig);
+            card.classList.remove('zoomed');
+            this._backdrop.style.display = 'none';
+            return;
+        }
+
+        // Parse current animated state from the transform
+        const cardW = this.config.card.width;
+        const cardH = this.config.card.height;
+        const cur = card.getAttribute('transform');
+        const curMatch = cur.match(/translate\(\s*([\d.-]+)\s*,\s*([\d.-]+)\s*\)\s*scale\(\s*([\d.-]+)\s*\)/);
+
+        const anim = {
+            tx: curMatch ? parseFloat(curMatch[1]) : targetTx,
+            ty: curMatch ? parseFloat(curMatch[2]) : targetTy,
+            s: curMatch ? parseFloat(curMatch[3]) : 1
+        };
+
+        const backdrop = this._backdrop;
+
+        anime({
+            targets: anim,
+            tx: targetTx,
+            ty: targetTy,
+            s: 1,
+            duration: 300,
+            easing: 'easeInCubic',
+            update: () => {
+                if (anim.s > 1.01) {
+                    card.setAttribute('transform',
+                        `translate(${anim.tx}, ${anim.ty}) scale(${anim.s}) translate(${-cardW / 2}, ${-cardH / 2})`
+                    );
+                } else {
+                    card.setAttribute('transform', `translate(${anim.tx}, ${anim.ty})`);
+                }
+            },
+            complete: () => {
+                card.setAttribute('transform', orig);
+                card.classList.remove('zoomed');
+                backdrop.style.display = 'none';
+            }
         });
     }
 };

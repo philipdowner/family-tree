@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/tree.css">
     <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/decorations.css">
     <link rel="stylesheet" href="css/responsive.css">
 </head>
 <body>
@@ -32,13 +33,17 @@
     <!-- Main Presentation Container -->
     <main id="presentation" class="presentation hidden">
 
-        <!-- Slide 1: Title -->
+        <!-- Slide 1: Title — Photo tree with family name -->
         <section id="slide-title" class="slide slide-title" data-slide="0" data-duration="5000">
             <div class="title-content">
+                <p class="title-the">The</p>
                 <h1 class="family-name"></h1>
                 <h2 class="title-subtitle">Family Tree</h2>
                 <p class="title-byline">A Journey Through Generations</p>
             </div>
+
+            <!-- Large photo tree — rendered by JS -->
+            <div class="title-photo-tree" id="title-photo-tree" aria-hidden="true"></div>
         </section>
 
         <!-- Slide 2: Full Tree -->
@@ -77,14 +82,14 @@
         <section id="slide-maternal-great" class="slide slide-focus" data-slide="5" data-duration="8000">
             <h2 class="slide-heading">My Mother's Grandparents</h2>
             <p class="slide-subheading">Maternal Great-Grandparents</p>
-            <div class="focus-cards focus-cards-four" id="maternal-great-cards"></div>
+            <div class="focus-cards" id="maternal-great-cards"></div>
         </section>
 
         <!-- Slide 7: Paternal Great-Grandparents -->
         <section id="slide-paternal-great" class="slide slide-focus" data-slide="6" data-duration="8000">
             <h2 class="slide-heading">My Father's Grandparents</h2>
             <p class="slide-subheading">Paternal Great-Grandparents</p>
-            <div class="focus-cards focus-cards-four" id="paternal-great-cards"></div>
+            <div class="focus-cards" id="paternal-great-cards"></div>
         </section>
 
         <!-- Slide 8: World Map -->
@@ -98,9 +103,13 @@
 
         <!-- Slide 9: Closing -->
         <section id="slide-closing" class="slide slide-closing" data-slide="8" data-duration="5000">
+            <!-- Decorative tree with photo branch tips -->
+            <div class="closing-tree" id="closing-tree" aria-hidden="true"></div>
+
             <div class="closing-content">
-                <h2 class="closing-title">Thank You!</h2>
-                <p class="closing-text">The <span class="family-name"></span> Family Tree</p>
+                <h2 class="closing-title">The <span class="family-name"></span> Family</h2>
+                <p class="closing-subtitle">Four Generations, One Story</p>
+                <p class="closing-byline">Mason Downer &mdash; 5th Grade &mdash; 2026</p>
             </div>
         </section>
 

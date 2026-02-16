@@ -1,45 +1,176 @@
 /* ==========================================================================
    Family Tree - Main Styles
-   Modern, clean design with teal/coral color scheme
+   Warm storybook design with nature-inspired palette
    ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   @font-face — Freight Display Pro (headings)
+   -------------------------------------------------------------------------- */
+@font-face {
+    font-family: 'Freight Display Pro';
+    src: url('../fonts/freight-display-pro/WOFF2/18494.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Freight Display Pro';
+    src: url('../fonts/freight-display-pro/WOFF2/18495.woff2') format('woff2');
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Freight Display Pro';
+    src: url('../fonts/freight-display-pro/WOFF2/18498.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Freight Display Pro';
+    src: url('../fonts/freight-display-pro/WOFF2/18500.woff2') format('woff2');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Freight Display Pro';
+    src: url('../fonts/freight-display-pro/WOFF2/18501.woff2') format('woff2');
+    font-weight: 600;
+    font-style: italic;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Freight Display Pro';
+    src: url('../fonts/freight-display-pro/WOFF2/18492.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Freight Display Pro';
+    src: url('../fonts/freight-display-pro/WOFF2/18493.woff2') format('woff2');
+    font-weight: 700;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* --------------------------------------------------------------------------
+   @font-face — Source Sans 3 (body)
+   -------------------------------------------------------------------------- */
+@font-face {
+    font-family: 'Source Sans 3';
+    src: url('../fonts/source-sans/WOFF2/47080.woff2') format('woff2');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Source Sans 3';
+    src: url('../fonts/source-sans/WOFF2/47087.woff2') format('woff2');
+    font-weight: 300;
+    font-style: italic;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Source Sans 3';
+    src: url('../fonts/source-sans/WOFF2/47081.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Source Sans 3';
+    src: url('../fonts/source-sans/WOFF2/47090.woff2') format('woff2');
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Source Sans 3';
+    src: url('../fonts/source-sans/WOFF2/52702.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Source Sans 3';
+    src: url('../fonts/source-sans/WOFF2/52703.woff2') format('woff2');
+    font-weight: 500;
+    font-style: italic;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Source Sans 3';
+    src: url('../fonts/source-sans/WOFF2/47086.woff2') format('woff2');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Source Sans 3';
+    src: url('../fonts/source-sans/WOFF2/47084.woff2') format('woff2');
+    font-weight: 600;
+    font-style: italic;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Source Sans 3';
+    src: url('../fonts/source-sans/WOFF2/47089.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Source Sans 3';
+    src: url('../fonts/source-sans/WOFF2/47083.woff2') format('woff2');
+    font-weight: 700;
+    font-style: italic;
+    font-display: swap;
+}
 
 /* --------------------------------------------------------------------------
    CSS Custom Properties (Variables)
    -------------------------------------------------------------------------- */
 :root {
-    /* Primary Colors */
-    --color-primary: #0D7377;
-    --color-primary-light: #14919B;
-    --color-primary-dark: #0A5A5D;
+    /* Primary Colors — Forest / Nature */
+    --color-primary: #2D6A4F;
+    --color-primary-light: #52B788;
+    --color-primary-dark: #1B4332;
 
-    /* Secondary Colors */
-    --color-secondary: #FF6B6B;
-    --color-secondary-light: #FF8E8E;
-    --color-secondary-dark: #E55555;
+    /* Secondary Colors — Warm Earth */
+    --color-secondary: #BC6C25;
+    --color-secondary-light: #DDA15E;
+    --color-secondary-dark: #9A5620;
 
-    /* Neutral Colors */
-    --color-background: #FAFAFA;
-    --color-background-gradient: linear-gradient(135deg, #FAFAFA 0%, #F0F4F5 100%);
-    --color-card: #FFFFFF;
-    --color-card-glass: rgba(255, 255, 255, 0.85);
-    --color-text: #2D3436;
-    --color-text-light: #636E72;
-    --color-text-muted: #B2BEC3;
+    /* Neutral Colors — Cream / Linen */
+    --color-background: #FDF8F0;
+    --color-background-gradient: radial-gradient(ellipse at 50% 40%, #FDF8F0 0%, #F5ECD7 60%, #EDE0C8 100%);
+    --color-card: #FFFEF9;
+    --color-card-glass: rgba(255, 254, 249, 0.88);
+    --color-text: #3D2C2E;
+    --color-text-light: #6B5E62;
+    --color-text-muted: #B8A9A0;
 
     /* Accent Colors for Family Sides */
-    --color-maternal: #0D7377;
-    --color-maternal-light: rgba(13, 115, 119, 0.1);
-    --color-paternal: #FF6B6B;
-    --color-paternal-light: rgba(255, 107, 107, 0.1);
+    --color-maternal: #6A994E;
+    --color-maternal-light: rgba(106, 153, 78, 0.12);
+    --color-paternal: #BC6C25;
+    --color-paternal-light: rgba(188, 108, 37, 0.12);
 
-    /* Shadows */
-    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
-    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
-    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
-    --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.08);
+    /* Accent — Honey Gold */
+    --color-accent: #DDA15E;
+
+    /* Shadows — warm-tinted */
+    --shadow-sm: 0 2px 8px rgba(61, 44, 46, 0.06);
+    --shadow-md: 0 4px 16px rgba(61, 44, 46, 0.08);
+    --shadow-lg: 0 8px 32px rgba(61, 44, 46, 0.12);
+    --shadow-card: 0 4px 20px rgba(61, 44, 46, 0.08);
 
     /* Typography */
-    --font-family: 'Segoe UI', 'San Francisco', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-family-heading: 'Freight Display Pro', Georgia, 'Times New Roman', serif;
+    --font-family: 'Source Sans 3', 'Source Sans Pro', 'Segoe UI', 'San Francisco', -apple-system, BlinkMacSystemFont, sans-serif;
     --font-size-xs: 0.75rem;
     --font-size-sm: 0.875rem;
     --font-size-base: 1rem;
@@ -200,7 +331,7 @@ button {
 }
 
 #error-message {
-    background: #FFF5F5;
+    background: #FDF5F0;
     border: 1px solid var(--color-secondary-light);
     border-radius: var(--radius-md);
     padding: var(--space-md);
@@ -248,6 +379,7 @@ button {
 }
 
 .slide-heading {
+    font-family: var(--font-family-heading);
     font-size: var(--font-size-3xl);
     font-weight: 600;
     color: var(--color-text);
@@ -263,32 +395,72 @@ button {
 }
 
 /* --------------------------------------------------------------------------
-   Slide: Title
+   Slide: Title — Photo tree with text overlay
    -------------------------------------------------------------------------- */
 .slide-title {
     background: var(--color-background-gradient);
+    overflow: hidden;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-2xl);
+    padding: var(--space-xl) var(--space-3xl);
 }
 
+/* Left column — text */
 .title-content {
-    text-align: center;
+    flex: 0 0 auto;
+    text-align: left;
+    max-width: 420px;
+    z-index: 1;
+}
+
+/* Right column — photo tree, as large as possible */
+.title-photo-tree {
+    flex: 1 1 auto;
+    height: 90vh;
+    min-height: 0;
+    pointer-events: none;
+}
+
+.title-photo-tree svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* "The" in small caps above family name */
+.title-the {
+    font-family: var(--font-family-heading);
+    font-size: var(--font-size-xl);
+    font-weight: 400;
+    color: var(--color-text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    margin-bottom: var(--space-xs);
 }
 
 .title-content .family-name {
-    font-size: var(--font-size-4xl);
+    font-family: var(--font-family-heading);
+    font-size: 8rem;
     font-weight: 700;
     color: var(--color-primary);
     letter-spacing: -0.02em;
-    margin-bottom: var(--space-md);
+    margin-bottom: var(--space-sm);
+    line-height: 1;
 }
 
 .title-subtitle {
+    font-family: var(--font-family);
     font-size: var(--font-size-2xl);
-    font-weight: 400;
+    font-weight: 300;
     color: var(--color-text);
     margin-bottom: var(--space-lg);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
 }
 
 .title-byline {
+    font-family: var(--font-family-heading);
     font-size: var(--font-size-lg);
     color: var(--color-text-light);
     font-style: italic;
@@ -379,6 +551,7 @@ button {
 }
 
 .person-name {
+    font-family: var(--font-family-heading);
     font-size: var(--font-size-xl);
     font-weight: 600;
     color: var(--color-text);
@@ -478,6 +651,10 @@ button {
     flex-shrink: 0;
 }
 
+.legend-item {
+    font-family: var(--font-family-heading);
+}
+
 /* --------------------------------------------------------------------------
    Slide: Closing
    -------------------------------------------------------------------------- */
@@ -487,18 +664,52 @@ button {
 
 .closing-content {
     text-align: center;
+    position: relative;
+    z-index: 1;
 }
 
 .closing-title {
+    font-family: var(--font-family-heading);
     font-size: var(--font-size-4xl);
     font-weight: 700;
     color: var(--color-primary);
+    margin-bottom: var(--space-md);
+}
+
+.closing-subtitle {
+    font-family: var(--font-family-heading);
+    font-size: var(--font-size-xl);
+    font-style: italic;
+    color: var(--color-text-light);
     margin-bottom: var(--space-lg);
 }
 
-.closing-text {
-    font-size: var(--font-size-xl);
-    color: var(--color-text-light);
+.closing-byline {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    letter-spacing: 0.05em;
+}
+
+/* Closing tree with photo tips */
+.closing-tree {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -52%);
+    width: min(50vh, 450px);
+    height: min(60vh, 550px);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.closing-tree svg {
+    width: 100%;
+    height: 100%;
+}
+
+.closing-tree .tree-photo-tip {
+    border-radius: 50%;
+    overflow: hidden;
 }
 
 .closing-text .family-name {

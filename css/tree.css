@@ -16,25 +16,33 @@
 .tree-branch {
     fill: none;
     stroke: var(--color-text-muted);
-    stroke-width: 2;
+    stroke-width: 3;
     stroke-linecap: round;
     stroke-linejoin: round;
 }
 
 .tree-branch.maternal {
     stroke: var(--color-maternal);
-    stroke-opacity: 0.6;
+    stroke-opacity: 0.7;
+    stroke-width: 3;
 }
 
 .tree-branch.paternal {
     stroke: var(--color-paternal);
-    stroke-opacity: 0.6;
+    stroke-opacity: 0.7;
+    stroke-width: 3;
+}
+
+/* Thicker branches closer to trunk */
+.tree-branch[data-delay="0"],
+.tree-branch[data-delay="100"] {
+    stroke-width: 4;
 }
 
 .tree-branch.trunk {
-    stroke: var(--color-text-light);
-    stroke-width: 4;
-    stroke-opacity: 0.4;
+    stroke: #8B7355;
+    stroke-width: 6;
+    stroke-opacity: 0.5;
 }
 
 /* Branch animation for tree growth */
@@ -58,17 +66,33 @@
    -------------------------------------------------------------------------- */
 .tree-card {
     cursor: pointer;
+    overflow: visible;
 }
 
 .tree-card:hover .tree-card-bg {
-    filter: drop-shadow(0 6px 20px rgba(0, 0, 0, 0.15));
+    filter: drop-shadow(0 6px 20px rgba(61, 44, 46, 0.15));
+}
+
+/* ---- Click-to-zoom ---- */
+.tree-zoom-backdrop {
+    fill: rgba(253, 248, 240, 0.8);
+    cursor: pointer;
+}
+
+.tree-card.zoomed {
+    filter: drop-shadow(0 12px 48px rgba(61, 44, 46, 0.3));
+    z-index: 10;
+}
+
+.tree-card.zoomed .tree-card-bg {
+    filter: none;
 }
 
 .tree-card-bg {
     fill: var(--color-card);
     rx: 12;
     ry: 12;
-    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.1));
+    filter: drop-shadow(0 4px 12px rgba(61, 44, 46, 0.1));
 }
 
 .tree-card.maternal .tree-card-bg {
@@ -86,51 +110,69 @@
     stroke-width: 3;
 }
 
-/* Photo circle */
+/* Photo circle - larger and more prominent */
 .tree-card-photo {
     clip-path: circle(50%);
 }
 
 .tree-card-photo-placeholder {
-    fill: var(--color-text-muted);
+    fill: linear-gradient(135deg, #A8B8C4 0%, #C5D3DD 100%);
+    opacity: 0.3;
 }
 
 .tree-card-photo-border {
     fill: none;
-    stroke: var(--color-card);
+    stroke: #FFFFFF;
+    stroke-width: 3;
+    filter: drop-shadow(0 1px 3px rgba(61, 44, 46, 0.2));
+}
+
+.tree-card.maternal .tree-card-photo-border {
+    stroke: var(--color-maternal);
     stroke-width: 3;
 }
 
-/* Text in cards */
+.tree-card.paternal .tree-card-photo-border {
+    stroke: var(--color-paternal);
+    stroke-width: 3;
+}
+
+.tree-card.child .tree-card-photo-border {
+    stroke: var(--color-primary);
+    stroke-width: 4;
+}
+
+/* Golden glow ring around child card */
+.tree-card.child .tree-card-bg {
+    stroke: var(--color-accent) !important;
+    stroke-width: 2;
+    filter: drop-shadow(0 0 12px rgba(221, 161, 94, 0.2)) drop-shadow(0 4px 12px rgba(61, 44, 46, 0.1));
+}
+
+/* Text in cards — horizontal layout, left-aligned */
 .tree-card-name {
     font-family: var(--font-family);
-    font-size: 18px;
+    font-size: 13px;
     font-weight: 600;
     fill: var(--color-text);
-    text-anchor: middle;
+    text-anchor: start;
 }
 
-.tree-card-name.small {
-    font-size: 14px;
-}
-
-.tree-card-dates {
+.tree-card-years {
     font-family: var(--font-family);
-    font-size: 13px;
-    fill: var(--color-text-light);
-    text-anchor: middle;
-}
-
-.tree-card-dates.small {
     font-size: 11px;
+    font-weight: 400;
+    fill: var(--color-text-light);
+    text-anchor: start;
 }
 
-/* Generation labels */
+/* Generation labels — placed between generations */
 .generation-label {
-    font-family: var(--font-family);
-    font-size: 12px;
+    font-family: var(--font-family-heading);
+    font-size: 15px;
     font-weight: 500;
-    fill: var(--color-text-muted);
+    font-style: italic;
+    fill: var(--color-text-light);
     text-anchor: start;
 }
 
@@ -212,6 +254,7 @@
 }
 
 .focus-person-name {
+    font-family: var(--font-family-heading);
     font-size: var(--font-size-xl);
     font-weight: 600;
     color: var(--color-text);
@@ -242,9 +285,87 @@
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-/* Smaller cards for 4-person displays */
+/* --------------------------------------------------------------------------
+   Horizontal Card Layout (Parents Slide)
+   -------------------------------------------------------------------------- */
+.focus-person-card-horizontal {
+    background: var(--color-card-glass);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: var(--radius-xl);
+    padding: var(--space-xl);
+    box-shadow: var(--shadow-card);
+    display: flex;
+    align-items: center;
+    gap: var(--space-xl);
+    width: 420px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.focus-person-card-horizontal:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.focus-person-card-horizontal.maternal {
+    border-left: 5px solid var(--color-maternal);
+}
+
+.focus-person-card-horizontal.paternal {
+    border-left: 5px solid var(--color-paternal);
+}
+
+.focus-person-card-horizontal .focus-person-photo {
+    width: 140px;
+    height: 140px;
+    flex-shrink: 0;
+    margin: 0;
+}
+
+.focus-person-card-horizontal .focus-person-info {
+    text-align: left;
+}
+
+.focus-person-card-horizontal .focus-person-name {
+    font-family: var(--font-family-heading);
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--space-xs);
+}
+
+/* Fun fact in italic */
+.focus-person-funfact {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-light);
+    margin-bottom: var(--space-md);
+    line-height: 1.4;
+}
+
+/* Ken Burns effect on focus photos */
+.slide-focus.active .focus-person-photo:not(.placeholder) {
+    animation: kenBurns 8s ease-in-out forwards;
+}
+
+@keyframes kenBurns {
+    from { background-size: 100%; }
+    to { background-size: 105%; }
+}
+
+/* Sepia-tinted border for great-grandparent photos */
+.focus-person-photo.sepia-border {
+    border-color: #C4A882;
+    box-shadow: 0 2px 12px rgba(139, 109, 78, 0.2);
+}
+
+/* Smaller cards for 4-person displays — 2x2 grid */
+.focus-cards-four {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 600px;
+}
+
 .focus-cards-four .focus-person-card {
-    width: 220px;
+    width: auto;
     padding: var(--space-lg);
 }
 

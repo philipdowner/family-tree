@@ -1,0 +1,116 @@
+/* ==========================================================================
+   Family Tree - Decorations & Textures
+   Paper texture overlays, per-slide backgrounds, botanical decorations
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Paper Texture Overlay (on all slides)
+   -------------------------------------------------------------------------- */
+.slide::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0.03;
+    pointer-events: none;
+    z-index: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 256px 256px;
+}
+
+/* Ensure slide content sits above texture */
+.slide > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* --------------------------------------------------------------------------
+   Per-Slide Background Washes
+   -------------------------------------------------------------------------- */
+
+/* Title — warm golden glow at center */
+.slide-title {
+    background: radial-gradient(ellipse at 50% 45%, rgba(221, 161, 94, 0.15) 0%, rgba(253, 248, 240, 0.6) 40%, #F5ECD7 100%),
+                var(--color-background-gradient);
+}
+
+/* Tree — neutral warm, lighter center for card contrast */
+.slide-tree {
+    background: radial-gradient(ellipse at 50% 50%, #FDF8F0 0%, #F5ECD7 70%, #EDE0C8 100%);
+}
+
+/* Parents — subtle balanced wash */
+.slide-focus[data-slide="2"] {
+    background: radial-gradient(ellipse at 50% 50%, rgba(221, 161, 94, 0.06) 0%, transparent 60%),
+                var(--color-background-gradient);
+}
+
+/* Maternal grandparents — faint olive wash */
+.slide-focus[data-slide="3"],
+.slide-focus[data-slide="5"] {
+    background: radial-gradient(ellipse at 50% 50%, rgba(106, 153, 78, 0.08) 0%, transparent 60%),
+                var(--color-background-gradient);
+}
+
+/* Paternal grandparents — faint sienna wash */
+.slide-focus[data-slide="4"],
+.slide-focus[data-slide="6"] {
+    background: radial-gradient(ellipse at 50% 50%, rgba(188, 108, 37, 0.08) 0%, transparent 60%),
+                var(--color-background-gradient);
+}
+
+/* Map — cooler parchment for vintage cartography */
+.slide-map {
+    background: radial-gradient(ellipse at 50% 45%, #F8F0E0 0%, #EDE0C8 60%, #E0D4BC 100%);
+}
+
+/* Closing — golden glow echo of title */
+.slide-closing {
+    background: radial-gradient(ellipse at 50% 45%, rgba(221, 161, 94, 0.15) 0%, rgba(253, 248, 240, 0.6) 40%, #F5ECD7 100%),
+                var(--color-background-gradient);
+}
+
+/* --------------------------------------------------------------------------
+   Decorative Botanical Corners
+   Inline SVG vine/leaf corners at ~8% opacity
+   Applied to title, closing, and focus slides
+   -------------------------------------------------------------------------- */
+.slide-title::after,
+.slide-closing::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.07;
+    background-image:
+        /* Top-left corner */
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Cpath d='M10 80 Q30 30 80 10' fill='none' stroke='%232D6A4F' stroke-width='2'/%3E%3Cpath d='M20 60 Q25 45 40 35' fill='none' stroke='%236A994E' stroke-width='1.5'/%3E%3Cpath d='M45 32 Q50 25 60 22' fill='none' stroke='%236A994E' stroke-width='1'/%3E%3Cellipse cx='48' cy='28' rx='6' ry='3' fill='none' stroke='%232D6A4F' stroke-width='1' transform='rotate(-35 48 28)'/%3E%3Cellipse cx='30' cy='50' rx='7' ry='3.5' fill='none' stroke='%232D6A4F' stroke-width='1' transform='rotate(-55 30 50)'/%3E%3C/svg%3E"),
+        /* Bottom-right corner */
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Cpath d='M190 120 Q170 170 120 190' fill='none' stroke='%232D6A4F' stroke-width='2'/%3E%3Cpath d='M180 140 Q175 155 160 165' fill='none' stroke='%236A994E' stroke-width='1.5'/%3E%3Cpath d='M155 168 Q150 175 140 178' fill='none' stroke='%236A994E' stroke-width='1'/%3E%3Cellipse cx='152' cy='172' rx='6' ry='3' fill='none' stroke='%232D6A4F' stroke-width='1' transform='rotate(145 152 172)'/%3E%3Cellipse cx='170' cy='150' rx='7' ry='3.5' fill='none' stroke='%232D6A4F' stroke-width='1' transform='rotate(125 170 150)'/%3E%3C/svg%3E");
+    background-position: top left, bottom right;
+    background-repeat: no-repeat;
+    background-size: min(25vw, 250px);
+}
+
+/* Lighter botanical accents on focus slides */
+.slide-focus::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.04;
+    background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Cpath d='M10 80 Q30 30 80 10' fill='none' stroke='%232D6A4F' stroke-width='2'/%3E%3Cpath d='M20 60 Q25 45 40 35' fill='none' stroke='%236A994E' stroke-width='1.5'/%3E%3Cellipse cx='30' cy='50' rx='7' ry='3.5' fill='none' stroke='%232D6A4F' stroke-width='1' transform='rotate(-55 30 50)'/%3E%3C/svg%3E");
+    background-position: top left;
+    background-repeat: no-repeat;
+    background-size: min(20vw, 180px);
+}
+
+/* --------------------------------------------------------------------------
+   Vignette Effect — subtle darkening at edges
+   -------------------------------------------------------------------------- */
+.slide::after {
+    box-shadow: inset 0 0 120px 30px rgba(61, 44, 46, 0.04);
+}
