@@ -91,6 +91,11 @@ const MapRenderer = {
             const svgDoc = parser.parseFromString(svgText, 'image/svg+xml');
             this.mapSVG = svgDoc.documentElement;
 
+            // Make the SVG fill the entire container
+            this.mapSVG.setAttribute('preserveAspectRatio', 'xMidYMid slice');
+            this.mapSVG.setAttribute('width', '100%');
+            this.mapSVG.setAttribute('height', '100%');
+
             // Clear container and append map
             this.container.innerHTML = '';
             this.container.appendChild(this.mapSVG);
@@ -129,21 +134,6 @@ const MapRenderer = {
             rect.setAttribute('fill', '#D4CFC0');
         });
 
-        // Add a vintage border frame around the map
-        const viewBox = this.mapSVG.getAttribute('viewBox');
-        if (viewBox) {
-            const [, , vw, vh] = viewBox.split(' ').map(Number);
-            const frame = document.createElementNS(this.SVG_NS, 'rect');
-            frame.setAttribute('x', 10);
-            frame.setAttribute('y', 10);
-            frame.setAttribute('width', vw - 20);
-            frame.setAttribute('height', vh - 20);
-            frame.setAttribute('fill', 'none');
-            frame.setAttribute('stroke', '#8B7355');
-            frame.setAttribute('stroke-width', '4');
-            frame.setAttribute('rx', 8);
-            this.mapSVG.appendChild(frame);
-        }
     },
 
     /**
@@ -356,18 +346,6 @@ const MapRenderer = {
         initial.textContent = data.code.toUpperCase().slice(0, 2);
         group.appendChild(initial);
 
-        // Country label below
-        const label = document.createElementNS(this.SVG_NS, 'text');
-        label.setAttribute('x', 0);
-        label.setAttribute('y', 30);
-        label.setAttribute('text-anchor', 'middle');
-        label.setAttribute('fill', '#3D2C2E');
-        label.setAttribute('font-size', '44');
-        label.setAttribute('font-weight', '600');
-        label.setAttribute('font-family', "'Freight Display Pro', Georgia, serif");
-        label.textContent = data.country;
-        group.appendChild(label);
-
         // Member count badge
         if (data.members.length > 1) {
             const badge = document.createElementNS(this.SVG_NS, 'g');
@@ -450,78 +428,6 @@ const MapRenderer = {
         initial.setAttribute('font-family', "'Freight Display Pro', Georgia, serif");
         initial.textContent = countryData.code.toUpperCase();
         group.appendChild(initial);
-
-        // Radiate member names outward in a circle
-        const members = countryData.members;
-        const nameRadius = 200;
-        const startAngle = -90; // Start from top
-        const angleStep = 360 / members.length;
-
-        members.forEach((member, i) => {
-            const angle = (startAngle + i * angleStep) * Math.PI / 180;
-            const nx = Math.cos(angle) * nameRadius;
-            const ny = Math.sin(angle) * nameRadius;
-
-            // Connecting line from pin to name
-            const line = document.createElementNS(this.SVG_NS, 'line');
-            line.setAttribute('x1', 0);
-            line.setAttribute('y1', 0);
-            line.setAttribute('x2', nx * 0.6);
-            line.setAttribute('y2', ny * 0.6);
-            line.setAttribute('stroke', '#2D6A4F');
-            line.setAttribute('stroke-width', '1');
-            line.setAttribute('stroke-opacity', '0.3');
-            line.setAttribute('stroke-dasharray', '4 3');
-            group.appendChild(line);
-
-            // Name label
-            const nameText = document.createElementNS(this.SVG_NS, 'text');
-            nameText.setAttribute('x', nx);
-            nameText.setAttribute('y', ny);
-            nameText.setAttribute('text-anchor', 'middle');
-            nameText.setAttribute('dominant-baseline', 'central');
-            nameText.setAttribute('fill', '#3D2C2E');
-            nameText.setAttribute('font-size', '24');
-            nameText.setAttribute('font-weight', '500');
-            nameText.setAttribute('font-family', "'Freight Display Pro', Georgia, serif");
-            nameText.textContent = member.name;
-            group.appendChild(nameText);
-
-            // Relationship sub-label
-            const relText = document.createElementNS(this.SVG_NS, 'text');
-            relText.setAttribute('x', nx);
-            relText.setAttribute('y', ny + 22);
-            relText.setAttribute('text-anchor', 'middle');
-            relText.setAttribute('fill', '#6B5E62');
-            relText.setAttribute('font-size', '16');
-            relText.setAttribute('font-style', 'italic');
-            relText.setAttribute('font-family', "'Freight Display Pro', Georgia, serif");
-            relText.textContent = member.relationship;
-            group.appendChild(relText);
-        });
-
-        // Caption below the pin
-        const caption = document.createElementNS(this.SVG_NS, 'text');
-        caption.setAttribute('x', 0);
-        caption.setAttribute('y', 60);
-        caption.setAttribute('text-anchor', 'middle');
-        caption.setAttribute('fill', '#3D2C2E');
-        caption.setAttribute('font-size', '36');
-        caption.setAttribute('font-weight', '600');
-        caption.setAttribute('font-family', "'Freight Display Pro', Georgia, serif");
-        caption.textContent = `All ${members.length} family members`;
-        group.appendChild(caption);
-
-        const caption2 = document.createElementNS(this.SVG_NS, 'text');
-        caption2.setAttribute('x', 0);
-        caption2.setAttribute('y', 95);
-        caption2.setAttribute('text-anchor', 'middle');
-        caption2.setAttribute('fill', '#6B5E62');
-        caption2.setAttribute('font-size', '28');
-        caption2.setAttribute('font-style', 'italic');
-        caption2.setAttribute('font-family', "'Freight Display Pro', Georgia, serif");
-        caption2.textContent = `Born in the ${countryData.country}`;
-        group.appendChild(caption2);
 
         positionGroup.appendChild(group);
         this.pinsGroup.appendChild(positionGroup);

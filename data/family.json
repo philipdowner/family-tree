@@ -100,8 +100,8 @@
       "photo": "images/people/ggm-mmm.jpg",
       "birthDate": "1983-01-02",
       "deathDate": "2021-11-15",
-      "countryOfOrigin": "United States",
-      "countryFlag": "us"
+      "countryOfOrigin": "Ireland",
+      "countryFlag": "ie"
     },
 
     "mothersMothersFather": {
@@ -122,8 +122,8 @@
       "photo": "images/people/ggm-mfm.jpg",
       "birthDate": "1935-12-23",
       "deathDate":"1968-11-28",
-      "countryOfOrigin": "United States",
-      "countryFlag": "us"
+      "countryOfOrigin": "Norway",
+      "countryFlag": "no"
     },
 
     "mothersFathersFather": {
@@ -144,8 +144,8 @@
       "photo": "images/people/ggm-fmm.jpg",
       "birthDate": "1934-01-18",
       "deathDate": "2022-06-01",
-      "countryOfOrigin": "United States",
-      "countryFlag": "us"
+      "countryOfOrigin": "Poland",
+      "countryFlag": "pl"
     },
 
     "fathersMothersFather": {
@@ -155,8 +155,8 @@
       "photo": "images/people/ggm-fmf.jpg",
       "birthDate": "1930-05-20",
       "deathDate": "2008-08-30",
-      "countryOfOrigin": "United States",
-      "countryFlag": "us"
+      "countryOfOrigin": "Germany",
+      "countryFlag": "de"
     },
 
     "fathersFathersMother": {
@@ -166,8 +166,8 @@
       "photo": "images/people/ggm-ffm.jpg",
       "birthDate": "1921-11-07",
       "deathDate": "1966-05-09",
-      "countryOfOrigin": "United States",
-      "countryFlag": "us"
+      "countryOfOrigin": "Netherlands",
+      "countryFlag": "nl"
     },
 
     "fathersFathersFather": {
@@ -177,8 +177,8 @@
       "photo": "images/people/ggf-fff.jpg",
       "birthDate": "1920-03-14",
       "deathDate": "2019-01-13",
-      "countryOfOrigin": "United States",
-      "countryFlag": "us"
+      "countryOfOrigin": "England",
+      "countryFlag": "gb"
     }
   }
 }

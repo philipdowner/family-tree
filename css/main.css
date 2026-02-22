@@ -603,39 +603,57 @@ button {
    -------------------------------------------------------------------------- */
 .slide-map {
     background: var(--color-background-gradient);
+    position: relative;
+    padding: 0;
+}
+
+.slide-map .slide-heading {
+    position: absolute;
+    top: var(--space-xl);
+    left: 0;
+    right: 0;
+    z-index: 2;
+    text-shadow: 0 1px 4px rgba(255, 255, 255, 0.8);
 }
 
 .map-container {
-    flex: 0 1 auto;
+    position: absolute;
+    inset: 0;
     width: 100%;
-    max-width: 1400px;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: var(--space-lg);
+    padding: 0;
+    z-index: 1;
 }
 
 .map-container svg {
     width: 100%;
-    height: auto;
-    max-height: 60vh;
+    height: 100%;
+    object-fit: cover;
 }
 
 .map-legend {
+    position: absolute;
+    bottom: 70px;
+    left: 0;
+    right: 0;
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-md);
     justify-content: center;
     padding: var(--space-md) var(--space-lg);
-    flex: 0 0 auto;
-    min-height: 60px;
+    z-index: 2;
 }
 
 .legend-item {
     display: flex;
     align-items: center;
     gap: var(--space-sm);
-    background: var(--color-card);
+    background: rgba(255, 254, 249, 0.92);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
     padding: var(--space-sm) var(--space-md);
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-sm);

@@ -1,14 +1,16 @@
 {
   "permissions": {
     "allow": [
-      "Bash(python3:*)"
+      "Bash(python3:*)",
+      "Bash(file:*)",
+      "Bash(identify:*)"
     ]
   },
-  "disabledMcpjsonServers": [
-    "obsidian"
-  ],
+  "enableAllProjectMcpServers": true,
   "enabledMcpjsonServers": [
     "obsidian"
   ],
-  "enableAllProjectMcpServers": true
+  "disabledMcpjsonServers": [
+    "obsidian"
+  ]
 }
