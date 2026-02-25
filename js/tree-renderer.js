@@ -531,10 +531,16 @@ const TreeRenderer = {
                 </div>
             `;
 
+            const age = DataLoader.getAge(person);
+            const ageLabel = age !== null
+                ? (person.deathDate ? `Lived ${age} years` : `Age ${age}`)
+                : '';
+
             const infoHTML = `
                 <div class="focus-person-info">
                     <h3 class="focus-person-name">${person.firstName} ${person.lastName}</h3>
                     <p class="focus-person-dates">${DataLoader.getDateRange(person) || ''}</p>
+                    ${ageLabel ? `<p class="focus-person-age">${ageLabel}</p>` : ''}
                     ${person.funFact ? `<p class="focus-person-funfact"><em>${person.funFact}</em></p>` : ''}
                     ${person.countryOfOrigin ? `
                         <div class="focus-person-origin">

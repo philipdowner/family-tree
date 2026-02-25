@@ -50,7 +50,7 @@
       "firstName": "Kim",
       "lastName": "Henselbecker",
       "photo": "images/people/maternal-grandmother.jpg",
-      "birthDate": "1956-01-14",
+      "birthDate": "1956-12-14",
       "deathDate": null,
       "countryOfOrigin": "United States",
       "countryFlag": "us"
@@ -98,7 +98,7 @@
       "firstName": "Barbara",
       "lastName": "Yendes",
       "photo": "images/people/ggm-mmm.jpg",
-      "birthDate": "1983-01-02",
+      "birthDate": "1928-02-02",
       "deathDate": "2021-11-15",
       "countryOfOrigin": "Ireland",
       "countryFlag": "ie"
@@ -131,8 +131,8 @@
       "firstName": "Don",
       "lastName": "Murray",
       "photo": "images/people/ggf-mff.jpg",
-      "birthDate": "1927-06-07",
-      "deathDate": "2005-06-28",
+      "birthDate": "1927-07-07",
+      "deathDate": "2005-07-28",
       "countryOfOrigin": "United States",
       "countryFlag": "us"
     },
@@ -153,8 +153,8 @@
       "firstName": "Frederick",
       "lastName": "Klindt",
       "photo": "images/people/ggm-fmf.jpg",
-      "birthDate": "1930-05-20",
-      "deathDate": "2008-08-30",
+      "birthDate": "1932-06-20",
+      "deathDate": "1965-06-22",
       "countryOfOrigin": "Germany",
       "countryFlag": "de"
     },

@@ -370,6 +370,34 @@ const DataLoader = {
     },
 
     /**
+     * Calculate age for a person (current age if living, age at death if deceased)
+     * @param {Object} person - Person object
+     * @returns {number|null} Age in years, or null if birth date is missing
+     */
+    getAge(person) {
+        if (!person || !person.birthDate) return null;
+
+        const [birthYear, birthMonth, birthDay] = person.birthDate.split('-').map(Number);
+
+        let endYear, endMonth, endDay;
+        if (person.deathDate) {
+            [endYear, endMonth, endDay] = person.deathDate.split('-').map(Number);
+        } else {
+            const today = new Date();
+            endYear = today.getFullYear();
+            endMonth = today.getMonth() + 1;
+            endDay = today.getDate();
+        }
+
+        let age = endYear - birthYear;
+        if (endMonth < birthMonth || (endMonth === birthMonth && endDay < birthDay)) {
+            age--;
+        }
+
+        return age >= 0 ? age : null;
+    },
+
+    /**
      * Get display dates for a person (birth - death)
      * @param {Object} person - Person object
      * @returns {string} Formatted date range

@@ -264,6 +264,13 @@
 .focus-person-dates {
     font-size: var(--font-size-sm);
     color: var(--color-text-light);
+    margin-bottom: var(--space-xs);
+}
+
+.focus-person-age {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-light);
+    font-style: italic;
     margin-bottom: var(--space-md);
 }
 
@@ -380,6 +387,10 @@
 }
 
 .focus-cards-four .focus-person-dates {
+    font-size: var(--font-size-xs);
+}
+
+.focus-cards-four .focus-person-age {
     font-size: var(--font-size-xs);
 }
 
