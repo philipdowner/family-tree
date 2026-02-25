@@ -6,7 +6,7 @@
 const Slideshow = {
     // State
     currentSlide: 0,
-    totalSlides: 9,
+    totalSlides: 10,
     isPlaying: false,
     isPaused: false,
     timer: null,
@@ -24,6 +24,7 @@ const Slideshow = {
     timing: {
         titleSlide: 5000,
         treeSlide: 10000,
+        childSlide: 8000,
         parentsSlide: 8000,
         grandparentsSlide: 8000,
         greatGrandparentsSlide: 8000,
@@ -36,6 +37,7 @@ const Slideshow = {
     slides: [
         { id: 'slide-title', timing: 'titleSlide', onEnter: null, transition: 'fade-scale' },
         { id: 'slide-tree', timing: 'treeSlide', onEnter: 'onTreeSlide', transition: 'zoom-in' },
+        { id: 'slide-child', timing: 'childSlide', onEnter: 'onChildSlide', transition: 'slide-left' },
         { id: 'slide-parents', timing: 'parentsSlide', onEnter: 'onParentsSlide', transition: 'slide-left' },
         { id: 'slide-maternal-grandparents', timing: 'grandparentsSlide', onEnter: 'onMaternalGrandparentsSlide', transition: 'slide-left' },
         { id: 'slide-paternal-grandparents', timing: 'grandparentsSlide', onEnter: 'onPaternalGrandparentsSlide', transition: 'slide-left' },

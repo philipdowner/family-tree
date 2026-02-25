@@ -73,6 +73,13 @@ const App = {
             TreeRenderer.initCardZoom();
         });
 
+        // Child (Mason) slide
+        Slideshow.registerCallback('onChildSlide', () => {
+            const container = document.getElementById('child-cards');
+            const child = [{ ...this.data.family.child, side: 'child' }];
+            TreeRenderer.createFocusCards(child, container);
+        });
+
         // Parents slide — horizontal layout
         Slideshow.registerCallback('onParentsSlide', () => {
             const container = document.getElementById('parents-cards');
