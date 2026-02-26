@@ -83,8 +83,9 @@ const MapRenderer = {
      */
     async loadMap() {
         try {
-            const response = await fetch('images/map/world-map.svg');
-            const svgText = await response.text();
+            // Use pre-bundled SVG when available (required for file:// / USB use)
+            const svgText = window.BUNDLED_DATA?.worldMapSVG
+                ?? await fetch('images/map/world-map.svg').then(r => r.text());
 
             // Parse the SVG
             const parser = new DOMParser();

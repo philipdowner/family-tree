@@ -15,11 +15,15 @@ const DataLoader = {
      */
     async loadAll() {
         try {
-            const [family, config, countries] = await Promise.all([
-                this.loadJSON('data/family.json', 'family'),
-                this.loadJSON('data/config.json', 'config'),
-                this.loadJSON('data/countries.json', 'countries')
-            ]);
+            // Use pre-bundled data when available (required for file:// / USB use)
+            const bundle = window.BUNDLED_DATA;
+            const [family, config, countries] = bundle
+                ? [bundle.family, bundle.config, bundle.countries]
+                : await Promise.all([
+                    this.loadJSON('data/family.json', 'family'),
+                    this.loadJSON('data/config.json', 'config'),
+                    this.loadJSON('data/countries.json', 'countries')
+                ]);
 
             this.familyData = family;
             this.configData = config;
